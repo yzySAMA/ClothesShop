@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.PageHelper;
 import com.jack.common.vo.JsonResult;
 import com.jack.entity.Product;
-import com.jack.entity.ProductExample;
 import com.jack.service.ProductService;
 
 @Controller
@@ -22,12 +20,8 @@ public class ProductController {
 	@RequestMapping("getAllProduct")
 	@ResponseBody
 	public JsonResult getAllproduct(@RequestParam(required = false, defaultValue = "1") Integer startPage,
-	            @RequestParam(required = false, defaultValue = "5") Integer PageSize, String pName) {
-	        PageHelper.startPage(startPage, PageSize);
-	        ProductExample example = new ProductExample();
-	        example.createCriteria().andPnameLike("%" + pName + "%");
-//	        System.out.println(example);
-	        List<Product> list = productService.selectByExample(example);
+	            @RequestParam(required = false, defaultValue = "5") Integer PageSize, String pName) {//@RequestParam初始化化值
+	        List<Product> list = productService.findPageByPname(startPage, PageSize, pName);
 	        return new JsonResult(list);
 	    }
 }
