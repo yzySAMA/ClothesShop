@@ -3,8 +3,8 @@ package com.jack.common.web;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.jack.common.exception.ServiceException;
 import com.jack.common.vo.JsonResult;
-import com.jack.exception.ServiceException;
 
 /**
  * @ControllerAdvice修饰的类一般为spring mvc中的全局异常处理类， 此类中可以定义一些异常处理办法
