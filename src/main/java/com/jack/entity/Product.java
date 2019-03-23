@@ -14,8 +14,25 @@ public class Product {
     private Integer pnumber;
 
     private String cid;
+    
+    
 
-    public String getPid() {
+    public Product() {
+		super();
+	}
+
+	public Product(String pid, String pname, Double price, String pimage, String pdesc, Integer pnumber, String cid) {
+		super();
+		this.pid = pid;
+		this.pname = pname;
+		this.price = price;
+		this.pimage = pimage;
+		this.pdesc = pdesc;
+		this.pnumber = pnumber;
+		this.cid = cid;
+	}
+
+	public String getPid() {
         return pid;
     }
 
