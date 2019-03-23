@@ -9,8 +9,6 @@ import com.jack.exception.ServiceException;
 /**
  * @ControllerAdvice修饰的类一般为spring mvc中的全局异常处理类， 此类中可以定义一些异常处理办法
  * @author LYY
- *
- *
  * @RestControllerAdvice也可以修饰 全局
  */
 @RestControllerAdvice
