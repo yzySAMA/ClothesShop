@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jack.dao.ScitemMapper" >
+  <resultMap id="BaseResultMap" type="com.jack.entity.Scitem" >
+    <id column="scitemid" property="scitemid" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="VARCHAR" />
+    <result column="subtotal" property="subtotal" jdbcType="VARCHAR" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="scid" property="scid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    scitemid, count, subtotal, pid, scid
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jack.entity.ScitemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from scitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from scitem
+    where scitemid = #{scitemid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from scitem
+    where scitemid = #{scitemid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jack.entity.ScitemExample" >
+    delete from scitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jack.entity.Scitem" >
+    insert into scitem (scitemid, count, subtotal, 
+      pid, scid)
+    values (#{scitemid,jdbcType=VARCHAR}, #{count,jdbcType=VARCHAR}, #{subtotal,jdbcType=VARCHAR}, 
+      #{pid,jdbcType=VARCHAR}, #{scid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jack.entity.Scitem" >
+    insert into scitem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scitemid != null" >
+        scitemid,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="subtotal != null" >
+        subtotal,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="scid != null" >
+        scid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scitemid != null" >
+        #{scitemid,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=VARCHAR},
+      </if>
+      <if test="subtotal != null" >
+        #{subtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="scid != null" >
+        #{scid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jack.entity.ScitemExample" resultType="java.lang.Integer" >
+    select count(*) from scitem
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update scitem
+    <set >
+      <if test="record.scitemid != null" >
+        scitemid = #{record.scitemid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.count != null" >
+        count = #{record.count,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subtotal != null" >
+        subtotal = #{record.subtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pid != null" >
+        pid = #{record.pid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scid != null" >
+        scid = #{record.scid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update scitem
+    set scitemid = #{record.scitemid,jdbcType=VARCHAR},
+      count = #{record.count,jdbcType=VARCHAR},
+      subtotal = #{record.subtotal,jdbcType=VARCHAR},
+      pid = #{record.pid,jdbcType=VARCHAR},
+      scid = #{record.scid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jack.entity.Scitem" >
+    update scitem
+    <set >
+      <if test="count != null" >
+        count = #{count,jdbcType=VARCHAR},
+      </if>
+      <if test="subtotal != null" >
+        subtotal = #{subtotal,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="scid != null" >
+        scid = #{scid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where scitemid = #{scitemid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jack.entity.Scitem" >
+    update scitem
+    set count = #{count,jdbcType=VARCHAR},
+      subtotal = #{subtotal,jdbcType=VARCHAR},
+      pid = #{pid,jdbcType=VARCHAR},
+      scid = #{scid,jdbcType=VARCHAR}
+    where scitemid = #{scitemid,jdbcType=VARCHAR}
+  </update>
+</mapper>

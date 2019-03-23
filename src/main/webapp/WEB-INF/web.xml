@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<display-name>ClothesShop</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+		<welcome-file>default.html</welcome-file>
+		<welcome-file>default.htm</welcome-file>
+		<welcome-file>default.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- 配置Spring MVC 前端控制器 -->
+	<!-- 注册前端控制器 -->
+	<servlet>
+		<servlet-name>frontController</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name><!-- 这个名字不能随意写 -->
+			<param-value>classpath:spring-configs.xml</param-value>
+		</init-param>
+		<!--配置servlet在服务器启动时加载(数字越小优先级越高) 配置如下选项以后,tomcat启动时就会初始化这个servlet, 这个servlet在初始化时会读取contextConfigLocation 
+			参数对应的配置文件. -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- 配置前端控制器映射 -->
+	<servlet-mapping>
+		<servlet-name>frontController</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+</web-app>
