@@ -28,6 +28,6 @@
 	<!-- 配置前端控制器映射 -->
 	<servlet-mapping>
 		<servlet-name>frontController</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>*.do</url-pattern>
 	</servlet-mapping>
 </web-app>
