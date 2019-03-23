@@ -11,7 +11,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.7</maven.compiler.source>
 		<maven.compiler.target>1.7</maven.compiler.target>
-		<spring.version>4.1.3.RELEASE</spring.version>
+		<spring.version>4.3.9.RELEASE</spring.version>
 		<mybatis.version>3.5.0</mybatis.version>
 		<mybatis.spring.version>1.3.2</mybatis.spring.version>
 		<mysql.version>5.1.32</mysql.version>
@@ -127,10 +127,6 @@
 			<artifactId>pagehelper</artifactId>
 			<version>5.1.8</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>4.3.9.RELEASE</version>
-		</dependency>
+
 	</dependencies>
 </project>
