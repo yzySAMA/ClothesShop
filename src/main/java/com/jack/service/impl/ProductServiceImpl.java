@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.jack.common.exception.ServiceException;
 import com.jack.common.vo.UUIDUtils;
 import com.jack.dao.ProductMapper;
+import com.jack.entity.Orders;
 import com.jack.entity.Product;
 import com.jack.entity.ProductExample;
 import com.jack.service.ProductService;
@@ -23,7 +25,7 @@ public class ProductServiceImpl implements ProductService {
 	 * 分页查询,根据pname模糊查询
 	 */
 	@Override
-	public List<Product> findPageByPname(Integer startPage, Integer PageSize, String Pname) {
+	public PageInfo<Product> findPageByPname(Integer startPage, Integer PageSize, String Pname) {
 		// 分页查询
 		PageHelper.startPage(startPage, PageSize);
 		ProductExample example = new ProductExample();
@@ -35,7 +37,8 @@ public class ProductServiceImpl implements ProductService {
 		if (list == null || list.size() == 0) {
 			throw new ServiceException("没有查询到数据");
 		}
-		return list;
+		PageInfo<Product> pi = new PageInfo<>(list);
+		return pi;
 	}
 
 	@Override
