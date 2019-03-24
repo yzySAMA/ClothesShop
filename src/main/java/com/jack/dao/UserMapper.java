@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
+	//根据用户名查用户
+	User findByUsername(String username);
     int countByExample(UserExample example);
 
     int deleteByExample(UserExample example);

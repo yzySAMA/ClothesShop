@@ -10,6 +10,11 @@
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
   </resultMap>
+  
+  <select id="findByUsername" resultType="com.jack.entity.User">
+  select uid,username,password,name,email,telephone,sex from user where username=#{username}
+  </select>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -158,6 +163,10 @@
       </if>
     </trim>
   </insert>
+  <!-- 通过用户名查找用户是否存在 -->
+  <select id="selectByUsername" resultType="int">
+  select count(*) from user where username=#{username}
+  </select>
   <select id="countByExample" parameterType="com.jack.entity.UserExample" resultType="java.lang.Integer" >
     select count(*) from user
     <if test="_parameter != null" >
