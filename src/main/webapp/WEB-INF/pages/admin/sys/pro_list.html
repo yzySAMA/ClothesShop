@@ -24,15 +24,13 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>用户名</th>
-							<th>部门</th>
-							<th>邮箱</th>
-							<th>手机号</th>
-							<th>状态</th>
-							<th>创建时间</th>
-							<th>修改时间</th>
-							<th>操作</th>
+							<th>商品ID</th>
+							<th>商品名</th>
+							<th>商品价格</th>
+							<th>商品图片</th>
+							<th>商品描述</th>
+							<th>商品数量</th>
+							<th>类别ID</th>
 						</tr>
 					</thead>
 					<tbody id="tbodyId"></tbody>
@@ -152,7 +150,7 @@
    }
    function doHandleResponseResult(result){
 	   if(result.state==1){
-		  doSetTableBodyRows(result.data.records);
+		  doSetTableBodyRows(result.data.list);
 		  doSetPagination(result.data);
 		}else{
 		  alert(result.message);
@@ -174,7 +172,7 @@
    }
    function doCreateTds(row){
 	   // console.log(row);
-	   var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
+	   /* var tds="<td><input type='radio' name='radioId' value='"+row.id+"' ></td>"+
 	     "<td>"+row.username+"</td>"+
 	     "<td>"+row.sysDept.name+"</td>"+
 	     "<td>"+row.email+"</td>"+
@@ -182,7 +180,14 @@
 	     "<td>"+(row.valid?"启用":"禁用")+"</td>"+
 	     "<td>"+new Date(row.createdTime).toLocaleString()+"</td>"+
 	     "<td>"+new Date(row.modifiedTime).toLocaleString()+"</td>"+
-	     "<td><button type='button' class='btn btn-default btn-valid'>"+(row.valid?"禁用":"启用")+"</button></td>"; 
+	     "<td><button type='button' class='btn btn-default btn-valid'>"+(row.valid?"禁用":"启用")+"</button></td>"; */ 
+	   var tds="<td>"+row.pid+"</td>"+
+		   "<td>"+row.pname+"</td>"+
+		   "<td>"+row.price+"</td>"+
+		   "<td>"+row.pimage+"</td>"+
+		   "<td>"+row.pdesc+"</td>"+
+		   "<td>"+row.pnumber+"</td>"+
+		   "<td>"+row.cid+"</td>";
        return tds;
    }
 </script>
