@@ -206,9 +206,9 @@ desired effect
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
-        <li class="active"><a href="#" id="load-log-id"><i class="fa fa-link"></i> <span>商品管理</span></a></li>        
-        <li class="active"><a href="#"><i class="fa fa-link"></i> <span>订单管理</span></a></li>        
-         <li class="active"><a href="#"><i class="fa fa-link"></i> <span>用户管理</span></a></li>           
+        <li class="active"><a href="#" id="load-product-id"><i class="fa fa-link"></i> <span>商品管理</span></a></li>        
+        <li class="active"><a href="#" id="load-order-id"><i class="fa fa-link"></i> <span>订单管理</span></a></li>        
+         <li class="active"><a href="#" id="load-user-id"><i class="fa fa-link"></i> <span>用户管理</span></a></li>           
 
       </ul>
       <!-- /.sidebar-menu -->
@@ -334,12 +334,9 @@ desired effect
    //页面加载完成执行如下函数
    $(function(){
 	   //在指定元素上注册click事件
-	  doLoadUI("load-pro-id","product/doProListUI.do");
-	  doLoadUI("load-menu-id","menu/doMenuListUI.do");
-	  doLoadUI("load-dept-id","dept/doDeptListUI.do");
-	  doLoadUI("load-role-id","role/doRoleListUI.do");
+	  doLoadUI("load-product-id","product/doProListUI.do");
+	  doLoadUI("load-order-id","order/doOrderListUI.do");
 	  doLoadUI("load-user-id","user/doUserListUI.do");
-	  doLoadUI("load-alter-id","alter/doAlterPasswordUI.do");
    });
    	function doLoadUI(id,url){
    		$("#"+id).click(function(){
