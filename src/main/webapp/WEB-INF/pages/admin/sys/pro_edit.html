@@ -1,0 +1,132 @@
+<!-- Horizontal Form -->
+<div class="box box-info">
+	<div class="box-header with-border">
+		<h3 class="box-title">添加商品</h3>
+	</div>
+	<!-- /.box-header -->
+	<!-- form start -->
+	<form class="form-horizontal" enctype="multipart/form-data">
+		<div class="box-body">
+			<div class="form-group">
+				<label for="nameId" class="col-sm-2 control-label">商品名称</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="nameId"
+						placeholder="商品名称">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="priceId" class="col-sm-2 control-label">商品价格</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control load-sys-dept"
+						 id="priceId" placeholder="商品价格">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="uploadId" class="col-sm-2 control-label">上传图片</label>
+				<div class="col-sm-10">
+					<input type="file" id="uploadId" placeholder="上传图片"
+						class="form-control" name="fileToUpload">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="descId" class="col-sm-2 control-label">商品描述</label>
+				<div class="col-sm-10">
+					<input type="text" id="descId" placeholder="商品描述"
+						class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="pnumberId" class="col-sm-2 control-label">商品数量</label>
+				<div class="col-sm-10">
+					<input type="text" id="pnumberId" placeholder="商品数量"
+						class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="cId" class="col-sm-2 control-label">商品类别</label>
+				<div class="col-sm-10">
+					<input type="text" id="cId" placeholder="商品类别"
+						class="form-control">
+				</div>
+			</div>
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer">
+			<button type="button" class="btn btn-default btn-cancel">Cancel</button>
+			<button type="button" class="btn btn-info pull-right btn-save">Save</button>
+		</div>
+		<!-- /.box-footer -->
+	</form>
+</div>
+<script type="text/javascript"
+	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
+<script type="text/javascript" src="bower_components/layer/layer.js">
+	
+</script>
+<script type="text/javascript">
+	$(function() {
+		$(".box-footer").on("click", ".btn-cancel", doCancel).on("click",
+				".btn-save", doSaveOrUpdate);
+		var data = $("#mainContentId").data("rowData");
+		if (data)
+			doInitEditFormData(data);
+	});
+
+	function doInitEditFormData(data) {
+		$("#nameId").val(data.pname);
+		$("#priceId").val(data.price);
+		$("#uploadId").val(data.pimage);
+		$("#descId").val(data.pdesc);
+		$("#pnumberId").val(data.pnumber);
+		$("#cId").val(data.cid);
+	}
+
+	function doCancel() {
+		$("#mainContentId").load("product/doProListUI.do", function() {
+			$("#mainContentId").removeData();
+			$("#parentId").removeData();
+		})
+	}
+
+	function doSaveOrUpdate() {
+		//1.获取表单数据
+		//先不修改
+		//var params = doGetEditFormData();
+		var rowData = $("#mainContentId").data("rowData");
+		if (rowData)
+			params.id = rowData.id;
+		//2.定义url
+		var insertUrl = "product/doSaveObject.do";
+		var updateUrl = "product/doUpdateObject.do";
+		var url = rowData ? updateUrl : insertUrl;
+		//3.异步提交数据
+		$.post(url, params, function(result) {
+			if (result.state == 1) {
+				alert(result.message);
+				doCancel();
+			} else {
+				alert(result.message);
+			}
+		});
+	}
+
+	function doGetEditFormData() {
+		var params = {
+			pname : $("#nameId").val(),
+			price : $("#priceId").val(),
+			pdesc : $("#descId").val(),
+			pnumberId : $("#pnumberId").val(),
+			cid : $("#cId"),
+			image: new FormData($("#uploadId"))
+		}
+		return params;
+	}
+</script>
+
+
+
+
+
+
+
+
