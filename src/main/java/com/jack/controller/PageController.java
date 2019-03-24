@@ -31,6 +31,9 @@ public class PageController {
 	public String productInfo() {
 		return "product_Info";
 	}
-
+	@RequestMapping("doLoginUI")
+	public String doLoginUI() {
+		return "login";
+	}
 
 }
