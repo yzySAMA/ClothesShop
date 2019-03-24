@@ -14,7 +14,7 @@ import com.jack.service.ProductService;
 
 @Controller
 @RequestMapping("/product/")
-public class ProductController {
+public class AdminProductController {
 	
 	@Autowired
 	private ProductService productService;
