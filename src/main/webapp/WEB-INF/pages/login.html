@@ -7,7 +7,7 @@
 <title>MyShop——登录</title>
 <link rel="stylesheet" type="text/css" href="static/assets/css/index.css">
 <link rel="stylesheet" type="text/css" href="static/assets/css/ziy.css">
-
+<script src="static/assets/js/jquery-1.11.3.min.js"></script>
  
 </head> 
 <body>
@@ -43,10 +43,11 @@
 					</div>
 				</div> 
 			</div>
+			<form method="post">
 			<div class="kengl_kuang">
 				<div class="txt_kuang">
-					<input type="text" class="itxt"  placeholder="邮箱/用户名/已验证手机">
-					<input type="text" class="itxt"  placeholder="密码">
+					<input type="text" class="itxt" id="username" placeholder="邮箱/用户名/已验证手机">
+					<input type="password" class="itxt" id="password" placeholder="密码">
 				</div>
 				<div class="remember">
 					<div class="fl">
@@ -57,7 +58,7 @@
 						<a href="#" class="fl" target="_blank" title="忘记密码">忘记密码?</a> 
 					</div>
 				</div>
-				<input type="button" tabindex="5" value="登 录" class="btnnuw">
+				<input type="button" tabindex="5" id ="login" value="登 录" class="login">
 			</div>
 			<div class="corp_login">
 				<div class="mingb_shoq"><a href="#">名榜授权登录！</a></div>
@@ -66,7 +67,7 @@
 		</div> 
 	</div>
 </div>
-
+</form>
 
 <div class="jianj_dib">
 	<div class="beia_hao">
@@ -74,6 +75,28 @@
 		<p class="gonga_bei">京公网安备：123456789号</p>
 	</div>
 </div>
+<script>
+ $(function(){
+	$("#login").click(function(){
+		var params={
+				username:$("#username").val(),
+				password:$("#password").val()
+		}
+		console.log("params",params);
+		var url="doLogin.do";
+		$.post(url,params,function(result){
+			if(result.state==1){
+				location.href="homePage?t="+Math.random()+"&username="+$("#username").val();
+				
+			}else{
+				alert(result.message);
+			}
+			return false;//防止刷新时重复提交
+		})
+	})
+});
+</script>
+
 
 </body>
 </html>
