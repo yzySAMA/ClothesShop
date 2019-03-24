@@ -20,7 +20,7 @@
 <div class="yiny">
 	<div class="beij_center">
 		<div class="dengl_logo">
-			<img src="static/assets/images/logo_1.png">
+			<img src="static/assets/images/logo1.png">
 			<h1>欢迎注册</h1>
 		</div>
 	</div>
@@ -30,8 +30,6 @@
 		<div class="ger_zhuc_biaot">
 			<ul>
 				<li class="ger_border_color"><a href="register">个人注册</a></li>
-				
-				
 				<p>我已经注册，现在就<a class="ftx-05 ml10" href="login">登录</a></p>
 			</ul>
 		</div>
@@ -48,10 +46,30 @@
 	                    	<div class="msg-cont">4-20个字符，支持汉字、字母、数字及“-”、“_”组合</div>
 	                  	</div>
                 	</div>
-                	<div class="msg-weak err-tips"  style="display: inline-block;"><div>请输入用户名</div></div>
+                	<!-- <div class="msg-weak err-tips"  style="display: inline-block;"><div>请输入用户名</div></div> -->
             	</div>
-            	<span class="suc-icon"></span>
+            	<!-- <span class="suc-icon"></span> -->
             </div>
+            
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">真实姓名：</label>
+              	</span>
+              	<input   class="i-text" type="text">
+             
+            </div>
+
+            <div class="reg-items">
+              	<span>
+              		<input type="radio" name="sex" value="1" id="sex_nv">
+                	<label for="sex_nv">女</label>
+              	</span>
+              	<span style="margin-left:20px">
+              		<input type="radio" name="sex" value="1" id="sex_nv">
+                	<label for="sex_nv">男</label>
+              	</span>
+            </div>
+            
             <div class="reg-items" >
               	<span class="reg-label">
                 	<label for="J_Name">设置密码：</label>
@@ -71,7 +89,7 @@
               	<span class="reg-label">
                 	<label for="J_Name">确认密码：</label>
               	</span>
-              	<input   class="i-text" type="text" disabled="disabled"> 
+              	<input   class="i-text" type="text" > 
               	<!--备注————display使用 inline-block-->
               	<div class="msg-box">
                 	<div class="msg-weak err-tips"  style="display: none;"><div>密码不一样</div></div>
@@ -87,32 +105,16 @@
                 	<div class="msg-weak err-tips"  style="display:none;"><div>手机号不能为空</div></div>
             	</div> 
             </div> 
+            
             <div class="reg-items" >
               	<span class="reg-label">
-                	<label for="J_Name">手机号码：</label>
+                	<label for="J_Name">邮箱账号：</label>
               	</span>
-              	<input   class="i-text i-short" type="text">
-              	<div class="check check-border" style="position:relative;left:0">
-                   	<a class="check-phone" style="padding:11px 10px 14px 10px;*line-height:60px;">获取短信验证码</a>
-                  	<span class="check-phone disable" style="display: none;"><em>60</em>秒后重新获取</span>
-                  <a class="check-phone" style="display: none;padding:11px 10px 14px 10px">重新获取验证码</a>
-                </div>
-              	<!--备注————display使用 inline-block-->
-              	<div class="msg-box"> 
-                	<div class="msg-weak err-tips"  style="display:none;"><div>请输入短信验证码</div></div>
-            	</div> 
+              	<input   class="i-text" type="text">
             </div>
-            <div class="reg-items" >
-              	<span class="reg-label">
-                	<label for="J_Name"> </label>
-              	</span> 
-              	<div class="dag_biaod">
-              		<input type="checkbox" value="english" >
-              		阅读并同意
-              		<a href="#" class="ftx-05 ml10">《MyShop用户注册协议》</a>
-              		<a href="#" class="ftx-05 ml10">《隐私协议》</a>
-              	</div>
-            </div>
+            
+           	<!-- 删除了原有的手机号码获取验证码模块 -->
+           	
             <div class="reg-items" >
               	<span class="reg-label">
                 	<label for="J_Name"> </label>
