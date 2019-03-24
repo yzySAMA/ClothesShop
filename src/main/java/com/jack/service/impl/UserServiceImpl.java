@@ -35,22 +35,5 @@ public class UserServiceImpl implements UserService {
 		int rows=userMapper.insert(user);
 		return rows;
 	}
-	//用户登录
-	@Override
-	public int doLogin(User user) {
-		if(user==null)
-			throw new ServiceException("对象不能为空");
-		if(StringUtils.isEmpty(user.getUsername()))
-			throw new ServiceException("用户名不能为空");
-		if(StringUtils.isEmpty(user.getPassword()))
-			throw new ServiceException("密码不能为空");
-		User u=userMapper.findByUsername(user.getUsername());
-		if(u==null)
-			throw new ServiceException("该用户不存在");
-		SimpleHash sh=new SimpleHash("MD5", user.getPassword());
-		if(sh.toHex()!=u.getPassword())
-			throw new ServiceException("用户名或密码错误");
-		return 1;
-	}
 
 }

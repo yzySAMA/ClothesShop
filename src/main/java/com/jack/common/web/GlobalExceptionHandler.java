@@ -1,5 +1,10 @@
 package com.jack.common.web;
 
+import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
+import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -43,4 +48,17 @@ public class GlobalExceptionHandler {
 		e.printStackTrace();
 		return new JsonResult(e);
 	}
+	@ExceptionHandler(ShiroException.class)
+	public JsonResult doHandlerShiroException(ShiroException e) {
+		JsonResult j=new JsonResult();
+		j.setState(0);
+		if(e instanceof UnknownAccountException) {
+			j.setMessage("用户名错误");
+		}else if(e instanceof IncorrectCredentialsException) {
+			j.setMessage("密码错误");
+		}else{
+			j.setMessage("系统维护");
+		}
+		return j;
+	}   
 }
