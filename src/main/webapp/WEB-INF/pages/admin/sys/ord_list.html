@@ -2,19 +2,11 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
-				<h3 class="box-title">用户管理</h3>
-
+				<h3 class="box-title">订单管理</h3>
 				<div class="box-tools">
-					<div class="input-group input-group-sm" style="width: 350px;">
-						<input type="text" name="table_search" id="searchNameId"
-							class="form-control pull-right" placeholder="用户名">
-
+					<div class="input-group input-group-sm" style="width: 50px;">
 						<div class="input-group-btn">
-							<button type="button" class="btn btn-default btn-search">
-                                <i class="fa fa-search"></i>
-							</button>
-							<button type="button" class="btn btn-default btn-add">添加</button>
-							<button type="button" class="btn btn-default btn-update">修改</button>
+							<button type="button" class="btn btn-danger btn-deleteAll">一键删除无效订单</button>
 						</div>
 					</div>
 				</div>
@@ -24,74 +16,156 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>用户名</th>
-							<th>部门</th>
-							<th>邮箱</th>
-							<th>手机号</th>
-							<th>状态</th>
+							<th>序号</th>
+							<th>订单ID</th>
 							<th>创建时间</th>
-							<th>修改时间</th>
-							<th>操作</th>
+							<th>总价格</th>
+							<th>订单状态</th>
+							<th>收货地址</th>
+							<th>收件人</th>
+							<th>联系电话</th>
+							<th>用户ID</th>
 						</tr>
 					</thead>
 					<tbody id="tbodyId"></tbody>
 				</table>
 			</div>
-			<div id="pageId" class="box-footer clearfix">
-			</div>
+			<div id="pageId" class="box-footer clearfix"></div>
 			<!-- /.box-body -->
 		</div>
 		<!-- /.box -->
 	</div>
 </div>
 <script type="text/javascript">
-   $(document).ready(function(){
-	   $("#pageId").load("doPageUI.do",function(){
-		   doGetObjects();
-	   });
-	  /*  $(".input-group-btn")
-	   .on("click",".btn-search",doQueryObjects)
-	   .on("click",".btn-add,.btn-update",doLoadEditUI);
-	   $("tbody").on("click",".btn-valid",doValidById); */
-   });
-   
-   
-   //页面加载完成异步加载当前页数据
-   function doGetObjects(){
-	   var url="orders/doFindObject.do";
-	   var pageNum=$("#pageId").data("pageNum");
-	   if(!pageNum)pageNum=1;
-	   var params={"pageNum":pageNum}
-	   params.username=$("#searchNameId").val().trim();
-	   console.log(params);
-	   $.getJSON(url,params,function(result){
-		   console.log(result);
-		   doHandleResponseResult(result);
-	   });
-   }
-   function doHandleResponseResult(result){
-	   if(result.state==1){
-		  doSetTableBodyRows(result.data.records);
-		  doSetPagination(result.data);
-		}else{
-		  alert(result.message);
-	   }
-   }
-   //通过服务端返回的数据初始化页面
-   function doSetTableBodyRows(data){
-	  //1.获取tbody对象，并清空内容
-	  var tBody=$("#tbodyId");
-	  tBody.empty();
-	  //2.迭代data内容将数据追加到tbody中
-	  for(var i in data){
-		  var tr=$("<tr></tr>");
-		  tr.data("rowData",data[i]);
-		  var tds=doCreateTds(data[i]);
-		  tr.append(tds);
-		  tBody.append(tr);
-	  }
-   }
+
+	$(document).ready(function() {
+		$("#pageId").load("doPageUI.do", function() {
+			doGetObjects();
+		});
+		 $(".input-group-btn")
+		   .on("click",".btn-deleteAll",doDeleteAll)
+		$("#tbodyId").on("click", ".btn-delete", doDeleteById);
+	});
+	// 一键删除无效订单
+	function doDeleteAll() {
+		//2.url
+		var url = "orders/doDeleteOrderByState.do"
+		//3.ajax request
+		$.post(url, function(result) {
+			if (result.state == 1) {
+				alert(result.message);
+				doGetObjects();
+			} else {
+				alert(result.message);
+			}
+		})
+
+	}
+	//删除订单信息
+	function doDeleteById() {
+		//1.params
+		var id = $(this).parents("tr").data("id");
+		console.log("hehda"+id);
+		var params = {
+			"id" : id
+		};
+		//2.url
+		var url = "orders/doDeleteOrderById.do"
+		//3.ajax request
+		$.post(url, params, function(result) {
+			if (result.state == 1) {
+				alert(result.message);
+				doGetObjects();
+			} else {
+				alert(result.message);
+			}
+		})
+
+	}
+
+	//页面加载完成异步加载当前页数据
+	function doGetObjects() {
+		var url = "orders/doFindObject.do";
+		var pageNum = $("#pageId").data("pageNum");
+		if (!pageNum)
+			pageNum = 1;
+		var params = {
+			"pageNum" : pageNum
+		}
+		$.getJSON(url, params, function(result) {
+			console.log(result);
+			doHandleResponseResult(result);
+		});
+	}
+	function doHandleResponseResult(result) {
+		if (result.state == 1) {
+			doSetTableBodyRows(result.data.records);
+			doSetPagination(result.data);
+		} else {
+			alert(result.message);
+		}
+	}
+	//通过服务端返回的数据初始化页面
+	function doSetTableBodyRows(data) {
+		//1.获取tbody对象，并清空内容
+		var tBody = $("#tbodyId");
+		tBody.empty();
+		//2.迭代data内容将数据追加到tbody中
+		for ( var i in data) {
+			var tr = $("<tr></tr>");
+			tr.data("rowData", data[i]);
+			var tds = doCreateTds(data[i]);
+			tr.append(tds);
+			tBody.append(tr);
+		}
+	}
+	// 处理响应结果
+	function doHandleResponseResult(result) {
+		if (result.state == 1) {// 正常数据
+			// 1.更新tbody中的内容(当前页记录)
+			// console.log(result);
+			doSetTableBodyRows(result.data.list);
+			// 2.更新pageId位置内容(分页数据)
+			doSetPagination(result.data);
+		} else {// 异常数据
+			alert(result.message);
+		}
+	}
+	// 将当前页记录呈现在页面上
+	function doSetTableBodyRows(records) {
+		// console.log(records);
+		// 1.获取tbody对象
+		var tBody = $("#tbodyId");
+		tBody.empty();// 清空内容
+		// 2.迭代records记录(循环一次取一行)
+		for (var i = 0; i < records.length; i++) {
+			// 1.创建tr对象
+			var tr = $("<tr></tr>");
+			tr.data("id",records[i].oid);
+			// 2.创建多个td对象
+			var tds = doCreateTds(records[i], i);
+			// 3.将td对象追加到tr中
+			tr.append(tds);
+			// 4.将tr追加到tbody中
+			tBody.append(tr);
+		}
+	}
+	// 创建td对象
+	function doCreateTds(data, i) {
+		// console.log(data);
+		var tds = 
+			 	"<td>"+(parseInt(i)+1)+"</td>"
+				+ "<td>" + data.oid + "</td>"
+				+ "<td>" + new Date(data.ordertime).toLocaleString() + "</td>"
+				+ "<td>" + data.total + "</td>"
+				+ "<td>" + data.state + "</td>"
+				+ "<td>" + data.address + "</td>"
+				+ "<td>" + data.name + "</td>"
+				+ "<td>" + data.telephone + "</td>"
+				+ "<td>" + data.uid + "</td>"
+				+ "<td><button type='button' class='btn btn-danger btn-delete' " + (data.state?"disabled='disabled'":"") + ">删除</button></td>";
+		return tds;
+	}
 </script>
 
 
