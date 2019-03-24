@@ -6,8 +6,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
-	//根据用户名查用户
+	/**导出用户信息查询*/
+	List<User> findAllObjects();
+	/**根据用户名查用户*/
 	User findByUsername(String username);
+	
     int countByExample(UserExample example);
 
     int deleteByExample(UserExample example);
@@ -29,4 +32,7 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+	
+	
 }

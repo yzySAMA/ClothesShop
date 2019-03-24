@@ -10,7 +10,10 @@
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
   </resultMap>
-  
+  <select id="findAllObjects" resultType="com.jack.entity.User">
+  	select uid,username,name,email,telephone,sex from user
+  </select>
+  <!-- 根据用户名查询用户信息 -->
   <select id="findByUsername" resultType="com.jack.entity.User">
   select uid,username,password,name,email,telephone,sex from user where username=#{username}
   </select>

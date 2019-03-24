@@ -70,4 +70,12 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex == null ? null : sex.trim();
     }
+
+	@Override
+	public String toString() {
+		return "User [uid=" + uid + ", username=" + username + ", password=" + password + ", name=" + name + ", email="
+				+ email + ", telephone=" + telephone + ", sex=" + sex + "]";
+	}
+    
+    
 }
