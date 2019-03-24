@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jack.common.vo.JsonResult;
@@ -21,8 +22,9 @@ public class OrdersController {
 	// 根据uid查询产品信息
 	@RequestMapping("doFindObject")
 	@ResponseBody
-	public JsonResult doFindObject(String uid) {
-		List<Orders> list = ordersService.findOrdersByUid(uid);
+	public JsonResult doFindObject(@RequestParam(required = false, defaultValue = "1") Integer startPage,
+			@RequestParam(required = false, defaultValue = "5") Integer pageSize) {
+		List<Orders> list = ordersService.findAllOrders(startPage, pageSize);
 		return new JsonResult(list);
 	}
 	

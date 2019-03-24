@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.druid.util.StringUtils;
+import com.github.pagehelper.PageHelper;
 import com.jack.common.exception.ServiceException;
 import com.jack.dao.OrdersMapper;
 import com.jack.entity.Orders;
@@ -17,21 +18,19 @@ public class OrdersServiceImpl implements OrdersService {
 	@Autowired
 	private OrdersMapper ordersMapper;
 	/**
-	 * 根据userId查询订单信息
+	 * 查询所有订单信息
 	 */
+
 	@Override
-	public List<Orders> findOrdersByUid(String uid) {
-		if (StringUtils.isEmpty(uid)) {
-			throw new ServiceException("未登录");
-		}
-		OrdersExample example = new OrdersExample();
-		example.createCriteria().andUidEqualTo(uid);
-		List<Orders> list = ordersMapper.selectByExample(example);
+	public List<Orders> findAllOrders(Integer startPage, Integer pageSize) {
+		// 分页查询
+		PageHelper.startPage(startPage, pageSize);
+		List<Orders> list = ordersMapper.selectByExample(null);
 		if (list == null || list.size() == 0) {
 			throw new ServiceException("未查询到订单");
 		}
 		return list;
 	}
-
+	
 
 }
