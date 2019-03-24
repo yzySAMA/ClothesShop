@@ -139,10 +139,10 @@
    }
    //页面加载完成异步加载当前页数据
    function doGetObjects(){
-	   var url="user/doFindPageObjects.do";
-	   var pageCurrent=$("#pageId").data("pageCurrent");
-	   if(!pageCurrent)pageCurrent=1;
-	   var params={"pageCurrent":pageCurrent}
+	   var url="product/doFindObject.do";
+	   var pageNum=$("#pageId").data("pageNum");
+	   if(!pageNum)pageNum=1;
+	   var params={"pageNum":pageNum}
 	   params.username=$("#searchNameId").val().trim();
 	   console.log(params);
 	   $.getJSON(url,params,function(result){

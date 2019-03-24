@@ -3,9 +3,9 @@
 	<li><a class="pre">上一页</a></li>
 	<li><a class="next">下一页</a></li>
 	<li><a class="last">尾页</a></li>
-	<li><a class="rowCount">总记录数(0)</a></li>
-	<li><a class="pageCount">总页数(0)</a></li>
-	<li><a class="pageCurrent">当前页(1)</a></li>
+	<li><a class="size">当前页数量(0)</a></li>
+	<li><a class="pages">总页数(0)</a></li>
+	<li><a class="pageNum">当前页(1)</a></li>
 </ul>
 <script type="text/javascript">
 	$(function(){
@@ -14,17 +14,17 @@
 	});
 	// 初始化分页数据
 	function doSetPagination(records) {
-		// 1.初始化总记录数
-		$(".rowCount").html("总记录数(" + records.rowCount + ")");
+		// 1.初始化当前页数量
+		$(".size").html("总记录数(" + records.size + ")");
 		// 2.初始化总页数
-		$(".pageCount").html("总页数(" + records.pageCount + ")");
+		$(".pages").html("总页数(" + records.pages + ")");
 		// 3.初始化当前页
-		$(".pageCurrent").html("当前页(" + records.pageCurrent + ")");
+		$(".pageNum").html("当前页(" + records.pageNum + ")");
 		// 4.存储当前页码值以及总页数
 		// 说明:jquery应用中每个对象都有一个data函数
 		// data函数用于基于某个对象存储key/value
-		$("#pageId").data("pageCount", records.pageCount);
-		$("#pageId").data("pageCurrent", records.pageCurrent);
+		$("#pageId").data("pages", records.pages);
+		$("#pageId").data("pageNum", records.pageNum);
 		// data函数语法data(key,[value]);//key,value自己基于业务定义
 		// data函数中没有value就是取值,例如data(key)表示取值
 	}
@@ -32,21 +32,21 @@
 	function doJumpToPage(){
 		// 1.获取当前页码以及总页数
 		
-		var pageCurrent = $("#pageId").data("pageCurrent");
-		var pageCount = $("#pageId").data("pageCount");
+		var pageNum = $("#pageId").data("pageNum");
+		var pages = $("#pageId").data("pages");
 		// 2.获取点击的对象的class属性值
 		var cls = $(this).prop("class") ;
 		// 3.基于点击对象的不同修改当前页码值
 		if (cls == "first") {
-			pageCurrent = 1;
-		} else if (cls == "pre" && pageCurrent > 1) {
-			pageCurrent--;
-		} else if (cls == "next" && pageCurrent < pageCount) {
-			pageCurrent++;
+			pageNum = 1;
+		} else if (cls == "pre" && pageNum > 1) {
+			pageNum--;
+		} else if (cls == "next" && pageNum < pages) {
+			pageNum++;
 		} else if (cls == "last") {
-			pageCurrent = pageCount;
+			pageNum = pages;
 		}
-		$("#pageId").data("pageCurrent", pageCurrent);
+		$("#pageId").data("pageNum", pageNum);
 		// console.log(pageCurrent);
 		// 4.基于新的页码值进行下次查询
 		doGetObjects();
