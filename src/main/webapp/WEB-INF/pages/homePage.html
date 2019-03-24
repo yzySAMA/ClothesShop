@@ -34,7 +34,7 @@
 					</a>
 				</li>
 				<li class="shu"></li>
-				<li class="denglu">Hi~<a class="red" href="login.html">请登录!</a>
+				<li id="loginInfo" class="denglu">Hi~<a id="loginName" class="red" href="doLoginUI.do">请登录!</a>
 					<a href="register.html">[免费注册]</a></li>
 				<li class="shu"></li>
 				</i>
@@ -82,8 +82,25 @@
 			$("#footerContent").load("footer");
 			doLoadUI("categroys","productList.do");
 			doLoadUI("gouwuche","cartUI.do");
-			
+			doLoadUser();			
 		});
+		
+		function doLoadUser(){
+			var username = getUrlParam("username");
+			//console.log(username);
+			if(!username){
+				return;
+			}
+			console.log(username);
+			$("#loginInfo").html(username);
+		}
+		
+		function getUrlParam(name) {
+	        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+	        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+	        if (r != null) return unescape(r[2]); return null; //返回参数值
+	    }
+
 		
 	   	function doLoadUI(id,url){
 	   		$("."+id).click(function(){
