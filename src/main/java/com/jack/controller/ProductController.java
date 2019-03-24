@@ -51,4 +51,9 @@ public class ProductController {
 		productService.updateProduct(record);
 		return new JsonResult("update oK");
 	}
+	//商品展示页面
+	@RequestMapping("doProListUI")
+	public String doProListUI() {
+		return "admin/sys/pro_list";
+	}
 }
