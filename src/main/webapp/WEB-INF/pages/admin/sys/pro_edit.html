@@ -25,7 +25,7 @@
 				<label for="uploadId" class="col-sm-2 control-label">上传图片</label>
 				<div class="col-sm-10">
 					<input type="file" id="uploadId" placeholder="上传图片"
-						class="form-control" name="fileToUpload">
+						class="form-control" name="image">
 				</div>
 			</div>
 			<div class="form-group">
@@ -71,6 +71,28 @@
 		if (data)
 			doInitEditFormData(data);
 	});
+	
+	//上传图片
+	function doUploadImage(){
+		var formData = new FormData();
+		formData.append('image', $('#uploadId')[0].files[0]);
+		if(!formData){
+			alert("请选择文件");
+			return ;
+		}
+		$.ajax({
+		    url: 'product/doUploadImage',
+		    type: 'POST',
+		    cache: false,
+		    data: formData,
+		    processData: false,
+		    contentType: false
+		}).done(function(result) {
+			//alert("ok");
+		}).fail(function(result) {
+			//alert("fail");
+		}); 
+	}
 
 	function doInitEditFormData(data) {
 		$("#nameId").val(data.pname);
@@ -91,7 +113,7 @@
 	function doSaveOrUpdate() {
 		//1.获取表单数据
 		//先不修改
-		//var params = doGetEditFormData();
+		var params = doGetEditFormData();
 		var rowData = $("#mainContentId").data("rowData");
 		if (rowData)
 			params.id = rowData.id;
@@ -99,6 +121,12 @@
 		var insertUrl = "product/doSaveObject.do";
 		var updateUrl = "product/doUpdateObject.do";
 		var url = rowData ? updateUrl : insertUrl;
+		var file = $('#uploadId')[0].files[0];
+		if(!file) {
+			alert("请添加文件");
+		}
+		var data = doUploadImage();
+		alert(data.message);
 		//3.异步提交数据
 		$.post(url, params, function(result) {
 			if (result.state == 1) {
@@ -116,8 +144,7 @@
 			price : $("#priceId").val(),
 			pdesc : $("#descId").val(),
 			pnumberId : $("#pnumberId").val(),
-			cid : $("#cId"),
-			image: new FormData($("#uploadId"))
+			cid : $("#cId")
 		}
 		return params;
 	}
