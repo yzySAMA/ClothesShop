@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jack.dao.OrdersMapper" >
+
+<!-- 查询所有订单 -->
+<select id="findAllOrders" resultType="com.jack.entity.vo.MyOrderVo">
+	 SELECT oid,state FROM orders WHERE uid=#{uid}
+</select>
+
+<!-- 查询封装好的订单项 -->
+<select id="findMyOrderItemVo" resultType="com.jack.entity.vo.MyOrderItemVo">
+	SELECT p.pimage,p.pname,p.price,o.count,o.subtotal 
+	FROM orderitem o,product p WHERE oid=#{oid} AND o.pid=p.pid
+</select>
+
+
   <resultMap id="BaseResultMap" type="com.jack.entity.Orders" >
     <id column="oid" property="oid" jdbcType="VARCHAR" />
     <result column="ordertime" property="ordertime" jdbcType="TIMESTAMP" />

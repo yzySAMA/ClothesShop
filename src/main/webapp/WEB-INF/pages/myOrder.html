@@ -1,0 +1,86 @@
+<div style="background-color: #f2f2f2">
+	<div class="container" style="background-color: white;">
+		<hr>
+		<div class="jib_xinx_kuang">
+			<div>
+				<h1>我的订单</h1>
+			</div>
+
+			<!--************************************-->
+			<table class="order-tb order-tb_1 table table-hover  table-bordered">
+				<colgroup>
+					<col class="number-col">
+					<col class="consignee-col">
+					<col class="amount-col">
+					<col class="operate-col">
+					<col class="dis_col">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>订单详情</th>
+						<th>金额</th>
+						<th>小计</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="sep-row">
+						<td colspan="3">订单编号：131313 &nbsp;&nbsp;<span>订单状态</span></td>
+					</tr>
+
+					<tr class="tr-bd">
+						<td rowspan="1">
+							<div class="goods-item">
+								<!-- 图片 -->
+								<div class="p-img">
+									<a target="_blank" href="#"> <img
+										src="static/assets/images/lieb_tupi1.jpg" alt="">
+									</a>
+								</div>
+								<!-- 商品名 -->
+								<div class="p-msg">
+									<div class="p-name">
+										<a target="_blank" href="#">红豆居家情侣睡衣男女春秋纯棉长袖条纹卡通家居服套装119
+											麻灰 170/92A</a>
+									</div>
+								</div>
+							</div> <!-- 商品数量 -->
+							<div class="goods-number">x1</div>
+						</td>
+						<!-- 金额 -->
+						<td rowspan="1">
+							<div class="zhif_jine">单价￥488.00</div>
+						</td>
+						<!-- 小计 -->
+						<td rowspan="1">
+							<div class="zhif_jine">总额￥488.00</div>
+						</td>
+
+					</tr>
+				</tbody>
+
+			</table>
+
+		</div>
+	</div>
+</div>
+<script>
+	$(function(){
+		$("#MainContent").load("myOrder",function(){
+			doGetOrdersMsg();
+		});
+	});
+	
+	function doGetOrdersMsg(){
+		var url="myOrder/doMyOrder";
+		var userJson = sessionStorage.getItem("userJson");//获取键为allJson的字符串
+		var user = JSON.parse(userJson).data;//将字符串抓换成对象
+			console.log(user);
+		var params={
+				"uid":user.uid,
+				"username":user.username
+		};
+		$.getJSON(url,params,function(result){
+			console.log(result);
+		});
+	}
+</script>

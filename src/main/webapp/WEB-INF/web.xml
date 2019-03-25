@@ -5,8 +5,8 @@
 	version="2.5">
 	<display-name>ClothesShop</display-name>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
+		<welcome-file>homePage.html</welcome-file>
+		<welcome-file>homePage</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
 		<welcome-file>default.html</welcome-file>
 		<welcome-file>default.htm</welcome-file>
