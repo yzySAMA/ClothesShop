@@ -1,5 +1,7 @@
 package com.jack.service;
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.jack.entity.Orders;
 
@@ -10,4 +12,6 @@ public interface AdminOrdersService {
 	int deleteOrderById(String oid);
 	// 删除无效订单
 	int deleteOrderByState();
+	//查询所有订单信息用于订单信息导出到Excel
+	List<Orders> findAllObjects();
 }

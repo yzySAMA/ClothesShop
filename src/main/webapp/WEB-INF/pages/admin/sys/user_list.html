@@ -44,15 +44,7 @@
 	</div>
 </div>
 <script type="text/javascript">
-	//用户信息导出
-	$(function() {
-		$("#export").click(function() {
-			var href = "user/doExportFile.do";
-			window.location.href = href;
-			return false;
-		})
-	});
-
+	
 	$(document).ready(function() {
 		$("#pageId").load("doPageUI.do", function() {
 			doGetObjects();
@@ -60,7 +52,7 @@
 		$(".input-group-btn").on("click", ".btn-search", doQueryObjecet);
 		//用户信息导出
 		$("#export").click(function() {
-			var href = "user/doExportFile.do";
+			var href = "user/doExportUserFile.do";
 			window.location.href = href;
 			return false;
 		});

@@ -39,7 +39,9 @@ public class AdminUserServiceImpl implements AdminUserService{
 		PageInfo<User> pi = new PageInfo<>(list);
 		return pi;
 	}
-
+	/**
+	 * 用户信息查询用于导出到Excel
+	 */
 	@Override
 	public List<User> findAllObjects() {
 		List<User> list = userMapper.findAllObjects();

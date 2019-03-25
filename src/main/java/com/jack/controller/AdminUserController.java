@@ -48,8 +48,8 @@ public class AdminUserController {
 	 * 用户信息导出
 	 * @param response
 	 */
-	@RequestMapping("doExportFile")
-	public void doExportFile(HttpServletResponse response) {
+	@RequestMapping("doExportUserFile")
+	public void doExportUserFile(HttpServletResponse response) {
 		List<User> userList=adminUserService.findAllObjects();
 		if (userList != null && userList.size() > 0) {
 			String fileName = "UserMessage.xls";
