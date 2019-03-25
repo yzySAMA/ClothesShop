@@ -1,7 +1,7 @@
 <div class="yiny yiny_gouwc">
 	<div class="beij_center">
 		<div class="dengl_logo">
-			<h1>购物车</h1>
+			<h1 style="color:red">购物车</h1>
 		</div>
 	</div>
 </div>
@@ -26,30 +26,8 @@
 
 <div class="container">
 
-	<div class="cart-shop-goods dangq_honh">
-		<div class="cart-shop-good">
-			<div class="cart-col-1">
-				<input type="checkbox" class="jdcheckbox" >
-			</div>
-			<div class="cart-col-2" style="height: 82px;">
-				<a href="" target="_blank" class="g-img"><img src="static/assets/upload/940.jpg" alt=""></a>
-			</div>
-			<div class="fl houj_c"> 
-				<div class="cart-col-3"><div class="cart-good-name"><a href="#" target="_blank">ThinkPad X1 </a></div></div>
-				<div class="cart-col-4"><div class="cart-good-real-price "><!--主品-->¥&nbsp;9999.00</div><div class="red"></div></div>
-				<div class="cart-col-5">1</div>
-				<div class="cart-col-6 ">
-				<div class="cart-good-amount">¥&nbsp;9999.00</div><!-- 重量展示(只展示全球百货的重量) --></div>
-			</div>
-			<div class="cart-col-7">
-				<div class="cart-good-fun delfixed">
-					<a href="#">删除</a>
-				</div>
-			</div>
-		</div>
-	</div>
-
 </div>
+
 
 <div class="jies_beij">
 	<div class="beij_center over_dis">
@@ -66,3 +44,71 @@
 		</div>
 	</div>
 </div>
+
+<script>
+$(function() {
+	doShowCartList();
+	$(".beij_center").on("change",".jdcheckbox",doChangeCheckAllState)
+	$(".container").on("change",".xiaofuxk",doChangeTheadCheckBoxState)
+})
+
+/* 展示购物车列表 */
+function doShowCartList() {
+	var url = "doShowCartList.do";
+	var userJson = JSON.parse(sessionStorage.getItem("userJson"));
+	var uid = userJson.data.uid;
+	var params = {
+		"uid": uid
+	};
+	//基于jQuery的getJSON函数向服务端发送异步请求
+	$.getJSON(url,params,function (result) {
+		console.log(result);
+		//将信息呈现到页面
+		var tdiv = $(".container");
+		tdiv.empty();//先清空
+		$(".container").data("data",result);
+		//迭代购物项
+		for (var i=0;i<result.data.length;i++){
+			var dataa = result.data[i];
+			
+			var divlw = $("<div class='cart-shop-goods'></div>");
+			var divw = $("<div class='cart-shop-good'></div>");
+			var div1 = $("<div class='cart-col-1'><input type='checkbox' class='jdcheckbox xiaofuxk'></div>");	
+			var div2 = $("<div class='cart-col-2' style='height: 82px;'> <a class='g-img'><img src='"+dataa.pimage+"'></a></div>");
+			var div3456 = $("<div class='fl houj_c'></div>");
+			var div3 = $("<div class='cart-col-3'><div class='cart-good-name'>"+dataa.pname+"</div></div>");
+			var div4 = $("<div class='cart-col-4'><div class='cart-good-real-price '>"+dataa.price+"</div></div>");
+			var div5 = $("<div class='cart-col-5'>"+dataa.count+"</div>");
+			var div6 = $("<div class='cart-col-6 '><div class='cart-good-amount'>"+dataa.subtotal+"</div></div>");
+			var div7 = $("<div class='cart-col-7'><div class='cart-good-fun delfixed'><a href='#'>删除</a></div></div>");
+			
+			div3456.append(div3,div4,div5,div6);
+			divw.append(div1,div2,div3456,div7);
+			divlw.append(divw);
+			tdiv.append(divlw);
+		}
+	});
+}
+
+
+//全选复选框事件，点击全选下面的复选框全勾上
+function doChangeCheckAllState() {
+	console.log("hhh")
+	var flag = $(".jdcheckbox").prop("checked");
+	$(".container input[type='checkbox']").each(function () {
+		$(this).prop("checked",flag);
+	})
+}
+function doChangeTheadCheckBoxState() {
+	console.log("nihoa")
+	var flag = true;
+	$(".container input[type='checkbox']").each(function () {
+		flag = flag && $(this).prop("checked");
+		$(".jdcheckbox").prop("checked",flag);
+	})
+}
+
+</script>
+
+
+
