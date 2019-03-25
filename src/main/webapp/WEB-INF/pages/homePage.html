@@ -7,11 +7,21 @@
 <link rel="stylesheet" type="text/css" href="static/assets/css/ziy.css">
 <link rel="stylesheet" type="text/css" href="static/assets/houl/jquery.fancybox-1.3.4.css">
 <link rel="stylesheet" type="text/css" href="static/assets/houl/style.css">
+    
  <!-- Bootstrap 3.3.7 -->
-<link rel="stylesheet" href="static/assets/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 <script src="static/assets/js/jquery-1.11.3.min.js"></script>
 <script src="static/assets/js/index.js" ></script>
 
+<!-- 新加的CSS,JS 2019/3/24 -->
+	<!-- Bootstrap CSS -->
+	<link href="static/assets2/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Main CSS -->
+	<link href="static/assets2/css/main.css" rel="stylesheet">
+	
+	<!-- jQuery JS -->
+	<script src="static/assets2/js/vendor/jquery.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script src="static/assets2/js/bootstrap.min.js"></script>
 
 <!-- jQuery 3 -->
 <script src="static/assets/bower_components/jquery/dist/jquery.min.js"></script>
@@ -28,9 +38,9 @@
 		<div class="header-box">
 			<ul class="header-right">
 				<li class="denglu">
-					<a class="gouwuche">
-					<img src="static/assets/images/shopping-cart.png">
-					我的购物车
+					<a class="gouwuche" href="#">
+						<img src="static/assets/images/shopping-cart.png">
+						我的购物车
 					</a>
 				</li>
 				<li class="shu"></li>
@@ -75,44 +85,104 @@
 	</div>
 	<section id="MainContent"></section>
 	<section id="footerContent"></section>
-	<hr>
-	<script type="text/javascript">
-		$(function() {
-			$("#MainContent").load("index");
-			$("#footerContent").load("footer");
-			doLoadUI("categroys","productList.do");
-			doLoadUI("gouwuche","cartUI.do");
-			doLoadUser();			
-		});
+	<hr>	
+	
+	<!-- 单个商品信息弹出层DIV -->
+	<div class="modal fade quick-view-modal-container"
+		id="quick-view-modal-container" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-xs-12">
+							<!-- product quickview image gallery -->
+							<div
+								class="product-image-slider quickview-product-image-slider flex-row-reverse">
+								<!--Modal Tab Content Start-->
+								<div
+									class="tab-content product-large-image-list quickview-product-large-image-list">
+									<div class="tab-pane fade show active" id="single-slide-quick-1"
+										role="tabpanel" aria-labelledby="single-slide-tab-quick-1">
+										<!--Single Product Image Start-->
+										<div class="single-product-img img-full">
+											<img src="static/assets/upload/940.jpg"
+												class="img-fluid" alt="picture" height="750" width="600">
+										</div>
+										<!--Single Product Image End-->
+									</div>
+								</div>
+								<!--Modal Content End-->
+							</div>
+							<!-- end of product quickview image gallery -->
+						</div>
+						<div class="col-lg-6 col-md-6 col-xs-12">
+							<!-- product quick view description -->
+							<div class="product-feature-details">
+								<input type="hidden" id="tccpid" value="hello" />
+								<h2 class="product-title mb-15" id="tccpname">商品名称</h2>
+								<h2 class="product-price mb-15">
+									<span class="main-price discounted">￥12.90</span> <span
+										class="discounted-price"> ￥10.00</span> <span
+										class="discount-percentage">优惠20%</span>
+								</h2>
+								<p class="product-description mb-20" id="tccdesc">商品描述
+								巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉巴拉</p>
+								<div class="cart-buttons mb-20">
+									<div class="pro-qty mr-10">
+										数量：<input type="text" id="tcccount" value="1">
+									</div>
+									<div class="add-to-cart-btn">
+										<input type="button" value="添加到购物车" class="pop-okkk">
+									</div>
+								</div>
+							</div>
+							<!-- end of product quick view description -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+<script type="text/javascript">
+	$(function() {
+		$("#MainContent").load("index");
+		$("#footerContent").load("footer");
 		
-		function doLoadUser(){
+		doLoadUI("categroys","productList.do");
+		doLoadUI("gouwuche","cartUI.do");
+		doLoadUser();			
+	});
+	
+	function doLoadUser(){
 
-			var hh = sessionStorage.getItem("userJson");//获取键为allJson的字符串
-			var pp = JSON.parse(hh);//将字符串抓换成对象
-			console.log(pp);
-			var username = pp.data.username;
-			//var username = getUrlParam("username");
-			//console.log(username);
-			if(!username){
-				return;
-			}
-			console.log(username);
-			$("#loginInfo").html(username);
+		var userString = sessionStorage.getItem("userJson");//获取键为allJson的字符串
+		var userJson = JSON.parse(userString);//将字符串抓换成对象
+		console.log(userJson);
+		//var username = getUrlParam("username");
+		if(!userJson){
+			return;
 		}
+		var username = userJson.data.username;
+		console.log(username);
+		$("#loginInfo").html(username);
+	}
 		
-		function getUrlParam(name) {
-	        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-	        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-	        if (r != null) return unescape(r[2]); return null; //返回参数值
-	    }
+   	function doLoadUI(id,url){
+   		$("."+id).click(function(){
+  		  $("#MainContent").load(url);
+  	  });
+   	} 	
+</script>
 
-		
-	   	function doLoadUI(id,url){
-	   		$("."+id).click(function(){
-	  		  $("#MainContent").load(url);
-	  	  });
-	   	}
-	</script>
 </body>
 
 </html>
