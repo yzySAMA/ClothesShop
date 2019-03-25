@@ -2,10 +2,16 @@ package com.jack.service.impl;
 
 import java.util.List;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.druid.util.StringUtils;
+import com.jack.common.vo.JsonResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.jack.common.exception.ServiceException;
@@ -47,5 +53,18 @@ public class AdminUserServiceImpl implements AdminUserService{
 		List<User> list = userMapper.findAllObjects();
 		return list;
 	}
-
+	@Override
+	public User findByUsername(String username, String password) {
+		if (StringUtils.isEmpty(username)) {
+			throw new ServiceException("用户名不能为空");
+		}
+		User admin = userMapper.findByUsername(username);
+		if (admin==null) {
+			throw new ServiceException("用户名或密码错误");
+		}
+		if (!admin.getPassword().equals(password)) {
+			throw new ServiceException("密码不正确");
+		}
+		return admin;
+	}
 }

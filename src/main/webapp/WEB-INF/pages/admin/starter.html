@@ -170,7 +170,7 @@ desired effect
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="doLogout.do" class="btn btn-default btn-sign-out">Sign out</a>
+                  <p id="logout" class="btn btn-default btn-sign-out">Sign out</p>
                 </div>
               </li>
             </ul>
@@ -337,6 +337,11 @@ desired effect
 	  doLoadUI("load-product-id","product/doProListUI.do");
 	  doLoadUI("load-order-id","orders/doOrderListUI.do");
 	  doLoadUI("load-user-id","user/doUserListUI.do");
+	  $("#logout").click(function() {
+			var href = "user/doLogout.do";
+			location.href = href;
+			return false;
+		});
    });
    	function doLoadUI(id,url){
    		$("#"+id).click(function(){
