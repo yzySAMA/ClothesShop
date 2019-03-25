@@ -10,6 +10,7 @@
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
   </resultMap>
+  <!-- 查询所有用户信息 -->
   <select id="findAllObjects" resultType="com.jack.entity.User">
   	select uid,username,name,email,telephone,sex from user
   </select>
@@ -17,6 +18,10 @@
   <select id="findByUsername" resultType="com.jack.entity.User">
   select uid,username,password,name,email,telephone,sex from user where username=#{username}
   </select>
+  <!-- 根据用户名保存用户信息 -->
+  <update id="doUpdateUser">
+  update user set password=#{password},name=#{name},email=#{email},telephone=#{telephone},sex=#{sex} where username=#{username}
+  </update>
   
   <sql id="Example_Where_Clause" >
     <where >

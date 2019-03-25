@@ -85,8 +85,9 @@
 		var url="doLogin.do";
 		$.post(url,params,function(result){
 			if(result.state==1){
-				location.href="homePage?t="+Math.random()+"&username="+$("#username").val();
-				
+				sessionStorage.setItem("userJson", JSON.stringify(result));
+				//location.href="homePage?t="+Math.random()+"&username="+$("#username").val();
+				location.href="homePage?t="+Math.random();
 			}else{
 				alert(result.message);
 			}

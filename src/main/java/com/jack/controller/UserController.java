@@ -31,12 +31,31 @@ public class UserController {
 		Subject subject=SecurityUtils.getSubject();
 		UsernamePasswordToken token=new UsernamePasswordToken(username, password);
 		subject.login(token);
+		User user=(User)subject.getPrincipal();
 		JsonResult js=new JsonResult();
 		js.setMessage("登录成功");
-		js.setData(username);
+		js.setData(user);
 		return js;
 	}
-
+	/**进入用户信息修改页面*/
+	@RequestMapping("doUserEditUI.do")
+	public String doUserEditUI() {
+		return "user_edit";
+	}
+	/**回显用户个人信息到信息修改页面*/
+	@RequestMapping("doFindUser.do")
+	@ResponseBody
+	public JsonResult doFindUser() {
+		User user=(User)SecurityUtils.getSubject().getPrincipal();
+		return new JsonResult(user);
+	}
+	/**保存用户个人修改信息*/
+	@RequestMapping("doSaveUser.do")
+	@ResponseBody
+	public JsonResult doSaveUser(User user,String oldPwd,String newPwd) {
+		userService.doUpdateUser(user,oldPwd,newPwd);
+		return new JsonResult("保存成功");
+	}
 	
 	
 }

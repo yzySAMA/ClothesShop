@@ -43,6 +43,7 @@
 				<entry key="/doLookCategoryUI.do" value="authc" /><!-- 查看购物车必须认证 -->
 				<entry key="/doPutCategory.do" value="authc" /><!-- 添加购物车必须认证 -->
 				<entry key="/doLookOrdersUI.do" value="authc" /><!-- 查看订单必须认证 -->
+				<entry key="/doUserEditUI.do" value="authc" /><!-- 修改个人信息必须认证 -->
 			</map>
 		</property>
 	</bean>

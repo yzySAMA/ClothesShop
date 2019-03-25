@@ -10,6 +10,8 @@ public interface UserMapper {
 	List<User> findAllObjects();
 	/**根据用户名查用户*/
 	User findByUsername(String username);
+	/**根据用户名保存用户修改信息*/
+	int doUpdateUser(User user);
 	
     int countByExample(UserExample example);
 

@@ -86,7 +86,12 @@
 		});
 		
 		function doLoadUser(){
-			var username = getUrlParam("username");
+
+			var hh = sessionStorage.getItem("userJson");//获取键为allJson的字符串
+			var pp = JSON.parse(hh);//将字符串抓换成对象
+			console.log(pp);
+			var username = pp.data.username;
+			//var username = getUrlParam("username");
 			//console.log(username);
 			if(!username){
 				return;

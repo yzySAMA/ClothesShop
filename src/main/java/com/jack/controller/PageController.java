@@ -40,7 +40,7 @@ public class PageController {
 	public String cartUI() {
 		return "cart";
 	}
-	@RequestMapping("doLoginUI.do")
+	@RequestMapping("doLoginUI")
 	public String doLoginUI() {
 		return "login";
 	}
