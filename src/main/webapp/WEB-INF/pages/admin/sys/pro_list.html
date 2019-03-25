@@ -2,7 +2,7 @@
 	<div class="col-xs-12">
 		<div class="box">
 			<div class="box-header">
-				<h3 class="box-title">用户管理</h3>
+				<h3 class="box-title">商品管理</h3>
 
 				<div class="box-tools">
 					<div class="input-group input-group-sm" style="width: 350px;">
@@ -24,7 +24,7 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th>商品ID</th>
+							<th></th>
 							<th>商品名</th>
 							<th>商品价格</th>
 							<th>商品图片</th>
@@ -51,7 +51,6 @@
 	   $(".input-group-btn")
 	   .on("click",".btn-search",doQueryObjects)
 	   .on("click",".btn-add,.btn-update",doLoadEditUI);
-	   $("tbody").on("click",".btn-valid",doValidById);
    });
    
    function doLoadEditUI(){
@@ -62,25 +61,27 @@
 		   doLoadPage(title);
 	   }else if($(this).hasClass("btn-update")){
 		   title="修改用户";
-		   var id=doGetCheckedId();
-		   console.log("id="+id)
-		   if(!id){
+		   var pid=doGetCheckedId();
+		   console.log("pid="+pid);
+		   if(!pid){
 			  alert("请先选择");
 			  return;
 		   }
 		   //基于id进行查询并加载编辑页面
-		   doFindObjectById(id,title);
+		   doFindObjectById(pid,title);
 	   }
    }
-   function doFindObjectById(id,title){
+   function doFindObjectById(pid,title){
 	   //1.params
-	   var params={"id":id};
+	   var params={"pid":pid};
 	   //2.url
-	   var url="user/doFindObjectById.do";
+	   var url="product/doFingObjectByPid";
 	   //3.ajax request
 	   $.getJSON(url,params,function(result){//JsonResult
 		   if(result.state==1){
-			  $("#mainContentId").data("rowData",result.data); 
+			  //debugger
+			  $("#mainContentId").data("rowData",result.data);
+			  console.log(result.data);
 	          doLoadPage(title);
 		   }else{
 			  alert(result.message);
@@ -92,32 +93,14 @@
 	 return $("tbody input[name='radioId']:checked").val();
    }
    function doLoadPage(title){
-	   var url="product/doProEdit.do"
+	   //debugger
+	   var url="product/doProEdit.do";
+	   var rowData = $("#mainContentId").data("rowData");
+	   
 	   $("#mainContentId").load(url,function(){
+		   $("#mainContentId").data("rowData",rowData);
 		   $(".box-title").html(title);
 	   }) 
-   }
-   //禁用和启用操作
-   function doValidById(){
-	   //params
-	   var rowData=$(this).parents("tr").data("rowData");
-	   var id=rowData.id;
-	   var newValid=rowData.valid?0:1;
-	   var params={"id":rowData.id,"valid":newValid};
-	   //url
-	   var url="user/doValidById.do";
-	   //ajax request
-       var btn=$(this);//获取点击的button对象
-	   $.post(url,params,function(result){
-    	   if(result.state==1){
-    		   alert(result.message);
-    		   //doGetObjects();//重新查询刷新
-    		   //优化方式实现(局部刷新:修改button显示,修改td内容显示)
-    		   doEditRow(btn,rowData.valid);
-    	   }else{
-    		   alert(result.message);
-    	   }
-       })    
    }    
    function doEditRow(obj,valid){
 	   //1.修改按钮上的内容
@@ -181,7 +164,7 @@
 	     "<td>"+new Date(row.createdTime).toLocaleString()+"</td>"+
 	     "<td>"+new Date(row.modifiedTime).toLocaleString()+"</td>"+
 	     "<td><button type='button' class='btn btn-default btn-valid'>"+(row.valid?"禁用":"启用")+"</button></td>"; */ 
-	   var tds="<td>"+row.pid+"</td>"+
+	   var tds="<td><input type='radio' name='radioId' value='"+row.pid+"' ></td>"+
 		   "<td>"+row.pname+"</td>"+
 		   "<td>"+row.price+"</td>"+
 		   "<td>"+row.pimage+"</td>"+

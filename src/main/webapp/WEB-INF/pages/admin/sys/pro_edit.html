@@ -5,7 +5,7 @@
 	</div>
 	<!-- /.box-header -->
 	<!-- form start -->
-	<form class="form-horizontal" enctype="multipart/form-data">
+	<form class="form-horizontal">
 		<div class="box-body">
 			<div class="form-group">
 				<label for="nameId" class="col-sm-2 control-label">商品名称</label>
@@ -26,6 +26,7 @@
 				<div class="col-sm-10">
 					<input type="file" id="uploadId" placeholder="上传图片"
 						class="form-control" name="image">
+					<button id="uploadButton" onclick="doUploadImage()">上传图片</button>
 				</div>
 			</div>
 			<div class="form-group">
@@ -58,18 +59,24 @@
 		<!-- /.box-footer -->
 	</form>
 </div>
-<script type="text/javascript"
-	src="bower_components/ztree/jquery.ztree.all.min.js"></script>
-<script type="text/javascript" src="bower_components/layer/layer.js">
-	
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 3 -->
+<script src="static/assets/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="static/assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="static/assets/js/adminlte.min.js"></script>
 </script>
 <script type="text/javascript">
 	$(function() {
 		$(".box-footer").on("click", ".btn-cancel", doCancel).on("click",
 				".btn-save", doSaveOrUpdate);
 		var data = $("#mainContentId").data("rowData");
+		console.log(data);
 		if (data)
 			doInitEditFormData(data);
+		$("#uploadButton").click(doUploadImage);
 	});
 	
 	//上传图片
@@ -88,16 +95,17 @@
 		    processData: false,
 		    contentType: false
 		}).done(function(result) {
+			$("#uploadId").data("message",result.message);
 			//alert("ok");
 		}).fail(function(result) {
-			//alert("fail");
+			alert("error");
 		}); 
 	}
 
 	function doInitEditFormData(data) {
 		$("#nameId").val(data.pname);
 		$("#priceId").val(data.price);
-		$("#uploadId").val(data.pimage);
+		//$("#uploadId").val(data.pimage);
 		$("#descId").val(data.pdesc);
 		$("#pnumberId").val(data.pnumber);
 		$("#cId").val(data.cid);
@@ -111,22 +119,18 @@
 	}
 
 	function doSaveOrUpdate() {
+		debugger
 		//1.获取表单数据
 		//先不修改
 		var params = doGetEditFormData();
 		var rowData = $("#mainContentId").data("rowData");
 		if (rowData)
-			params.id = rowData.id;
+			params.pid = rowData.pid;
 		//2.定义url
-		var insertUrl = "product/doSaveObject.do";
-		var updateUrl = "product/doUpdateObject.do";
+		
+		var insertUrl = "product/doSaveObject";
+		var updateUrl = "product/doUpdateObject";
 		var url = rowData ? updateUrl : insertUrl;
-		var file = $('#uploadId')[0].files[0];
-		if(!file) {
-			alert("请添加文件");
-		}
-		var data = doUploadImage();
-		alert(data.message);
 		//3.异步提交数据
 		$.post(url, params, function(result) {
 			if (result.state == 1) {
@@ -143,8 +147,9 @@
 			pname : $("#nameId").val(),
 			price : $("#priceId").val(),
 			pdesc : $("#descId").val(),
-			pnumberId : $("#pnumberId").val(),
-			cid : $("#cId")
+			pnumber : $("#pnumberId").val(),
+			cid : $("#cId").val(),
+			pimage: $("#uploadId").data("message")
 		}
 		return params;
 	}
