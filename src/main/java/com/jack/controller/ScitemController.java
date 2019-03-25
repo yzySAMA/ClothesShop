@@ -18,8 +18,8 @@ public class ScitemController {
 
 	@RequestMapping("doAddScitem")
 	@ResponseBody
-	public JsonResult doAddScitem(Scitem scitem){
-		scitemService.doAddScitem(scitem);
+	public JsonResult doAddScitem(Scitem scitem,String uid){
+		scitemService.doAddScitem(scitem,uid);
 		return new JsonResult("添加成功");
 	}
 }

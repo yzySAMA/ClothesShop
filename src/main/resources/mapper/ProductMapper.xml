@@ -10,6 +10,7 @@
     <result column="pnumber" property="pnumber" jdbcType="INTEGER" />
     <result column="cid" property="cid" jdbcType="VARCHAR" />
   </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -71,6 +72,15 @@
   <sql id="Base_Column_List" >
     pid, pname, price, pimage, pdesc, pnumber, cid
   </sql>
+  
+  <!-- 自己加的：首页热门商品展示 -->
+  <select id="doShowPopularProducts" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from product limit 0,12
+  </select>
+  
+  
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jack.entity.ProductExample" >
     select
     <if test="distinct" >

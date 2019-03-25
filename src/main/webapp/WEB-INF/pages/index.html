@@ -40,7 +40,6 @@ $(function() {
 });
 //显示首页热门商品列表
 function doShowPopularProducts() {
-	console.log("testsetestestse")
 	var url = "doShowPopularProducts.do";
 	//基于jQuery的getJSON函数向服务端发送异步请求
 	$.getJSON(url,function (result) {
@@ -96,14 +95,16 @@ function doAddToCart() {
 	var price = $(".discounted-price").text();
 	var pid = $("#tccpid").val();
 	
-	var userString = sessionStorage.getItem("userJson");//获取键为allJson的字符串
-	var userJson = JSON.parse(userString);//将字符串抓换成对象
+	var userJson = JSON.parse(sessionStorage.getItem("userJson"));
+	var uid = userJson.data.uid;
+	console.log(uid);
 	
 	var params = {
 		"count": count,
 		"subtotal": price*count,
 		"pid": pid,
-		"scid": 111
+		//"scid": 111
+		"uid": uid
 	}
 	$.post(url,params,function(result){
 		if (result.state == 1) {

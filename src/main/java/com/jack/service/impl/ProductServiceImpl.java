@@ -11,7 +11,6 @@ import com.github.pagehelper.PageInfo;
 import com.jack.common.exception.ServiceException;
 import com.jack.common.vo.UUIDUtils;
 import com.jack.dao.ProductMapper;
-import com.jack.entity.Orders;
 import com.jack.entity.Product;
 import com.jack.entity.ProductExample;
 import com.jack.service.ProductService;
@@ -21,6 +20,26 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductMapper productMapper;
+		
+	/**首页热门商品获取*/
+	@Override
+	public List<Product> doShowPopularProducts() {
+		List<Product> list = productMapper.doShowPopularProducts();
+		if (list == null) {
+			throw new ServiceException("没有查询到数据");
+		}
+		return list;
+	}
+	/**根据pid查询单个商品信息  */
+	@Override
+	public Product doShowSingleProduct(String pid) {
+		Product product = productMapper.selectByPrimaryKey(pid);
+		if (product == null) {
+			throw new ServiceException("这个商品可能已经被删除");
+		}
+		return product;   
+	}
+	
 	/**
 	 * 分页查询,根据pname模糊查询
 	 */

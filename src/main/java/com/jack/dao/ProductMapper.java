@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface ProductMapper {
+	/**首页热门商品获取 */
+	List<Product> doShowPopularProducts();
+	
     int countByExample(ProductExample example);
 
     int deleteByExample(ProductExample example);
