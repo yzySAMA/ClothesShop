@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jack.common.vo.JsonResult;
 import com.jack.entity.User;
@@ -21,6 +23,7 @@ public class MyOrderController {
 	
 	/**我的订单信息展示*/
 	@RequestMapping("doMyOrder")
+	@ResponseBody
 	public JsonResult doMyOrder(User user) {
 		System.out.println(user);
 		List<MyOrderVo> MyOrderVoList=myOrderService.findAllOrders(user.getUid());
