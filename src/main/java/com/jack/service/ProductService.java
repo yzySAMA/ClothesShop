@@ -16,4 +16,6 @@ public interface ProductService {
 	List<Product> doShowPopularProducts();
 	/**根据pid查询单个商品信息*/
 	Product doShowSingleProduct(String pid);
+	/**展示首页相应类别商品信息*/
+	List<Product> doShowCategoryProducts(String cid);
 }

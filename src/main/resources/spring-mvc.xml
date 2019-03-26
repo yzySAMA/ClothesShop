@@ -36,20 +36,19 @@
        </bean>
        
        <!-- 配置拦截器 -->
-       <mvc:interceptors>
-	        <!-- 登录拦截器 -->
+<!--        <mvc:interceptors>
+	        登录拦截器
        		<mvc:interceptor >
-       			<!-- <mvc:mapping path="/user/*"/>
+       			<mvc:mapping path="/user/*"/>
        			<mvc:mapping path="/orders/*"/>
        			<mvc:mapping path="/product/*"/>
-       			<mvc:mapping path="/category/*"/> -->
+       			<mvc:mapping path="/category/*"/>
        			<mvc:mapping path="/startUI"/>
-       			<!-- 除去登录页面都要拦截 -->
+       			除去登录页面都要拦截
        			<mvc:exclude-mapping path="/user/static/asstes/**"/>
-       			<!-- <bean class="com.jack.interceptor.LoginInterceptor"></bean> -->
-       			<ref bean="loginInterceptor"/>
+       			<bean class="com.jack.interceptor.LoginInterceptor"></bean>
        		</mvc:interceptor>
-       </mvc:interceptors>
+       </mvc:interceptors> -->
 </beans>
 
 

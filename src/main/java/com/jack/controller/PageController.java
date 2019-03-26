@@ -36,7 +36,7 @@ public class PageController {
 		return "product_Info";
 	}
 
-	@RequestMapping("cartUI.do")
+	@RequestMapping("cartUI")
 	public String cartUI() {
 		return "cart";
 	}

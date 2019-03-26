@@ -33,4 +33,12 @@ public class ProductController {
 		return new JsonResult(doShowSingleProduct);
 	}
 	
+	/**首页类别商品获取*/
+	@RequestMapping("doShowCategoryProducts")
+	@ResponseBody
+	public JsonResult doShowCategoryProducts(String cid){
+		List<Product> productList = productService.doShowCategoryProducts(cid);
+		return new JsonResult(productList);
+	}
+	
 }

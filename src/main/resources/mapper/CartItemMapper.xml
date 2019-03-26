@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jack.dao.CartItemMapper" >
+	
+	
+	<select id="doShowCartList" resultType="com.jack.entity.vo.MyCartItemVo">
+		select pimage,pname,price,count,subtotal from scitem s , product p WHERE s.pid = p.pid AND scid = #{scid};
+	</select>
+	
+	
+</mapper>

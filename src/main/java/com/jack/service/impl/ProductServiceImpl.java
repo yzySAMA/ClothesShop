@@ -39,6 +39,15 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return product;   
 	}
+	/**展示首页相应类别商品信息*/
+	@Override
+	public List<Product> doShowCategoryProducts(String cid) {
+		ProductExample example = new ProductExample();
+		example.createCriteria().andCidEqualTo(cid);
+		List<Product> list = productMapper.selectByExample(example);
+		return list;
+	}
+	
 	
 	/**
 	 * 分页查询,根据pname模糊查询
@@ -135,6 +144,7 @@ public class ProductServiceImpl implements ProductService {
 		
 		return rows;
 	}
+
 
 
 }

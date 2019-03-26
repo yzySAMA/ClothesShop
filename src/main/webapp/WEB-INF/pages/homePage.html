@@ -73,19 +73,28 @@
 			</div>
 			<div class="focus-b">
 				<ul>
-					<li class="categroys"><a href="#">人气美衣</a></li>
-					<li ><a href="#">男上装</a></li>
-					<li><a href="#">男下装 </a></li>
-					<li><a href="#">女上装</a></li>
-					<li><a href="#">女下装</a></li>
-					<li><a href="#">童装</a></li>
+					<li class="categroys" value="1"><a href="#">人气美衣</a></li>
+					<li class="categroys" value="2"><a href="#">男上装</a></li>
+					<li class="categroys" value="3"><a href="#">男下装 </a></li>
+					<li class="categroys" value="4"><a href="#">女上装</a></li>
+					<li class="categroys" value="5"><a href="#">女下装</a></li>
+					<li class="categroys" value="6"><a href="#">童装</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
+	
 	<section id="MainContent"></section>
+	<!-- 首页按类展示区 -->
+	<div class="beij_center">
+		<div class="meis_kuang">
+			<div class="meis_neir_lieb">
+			
+			</div>
+		</div>
+	</div>
 	<section id="footerContent"></section>
-	<hr>	
+		
 	
 	<!-- 单个商品信息弹出层DIV -->
 	<div class="modal fade quick-view-modal-container"
@@ -156,13 +165,52 @@
 	$(function() {
 		$("#MainContent").load("index");
 		$("#footerContent").load("footer");
-		
-		doLoadUI("categroys","productList.do");
-		doLoadUI("gouwuche","cartUI.do");
-		//测试我的订单的跳转		
+
+		//测试我的订单的跳转	
 		doLoadUI("aaaa","myOrder");
-		doLoadUser();			
+		doLoadUser();
+		//点击购物车时前端验证是否登录
+		$(".gouwuche").click(function() {
+			if(!sessionStorage.getItem("userJson")){
+				location.href="doLoginUI";
+			}
+			$(".beij_center").empty();
+			$("#MainContent").load("cartUI");
+		})
+		
+		//商品分类展示
+		$(".focus-b").on("click",".categroys",doShowCategoryProducts)
+		
 	});
+	
+	function doShowCategoryProducts() {
+		var url = "doShowCategoryProducts";
+		var cid = $(this).val();
+		console.log(cid)
+		var params = {
+			"cid": cid
+		}
+		//基于jQuery的getJSON函数向服务端发送异步请求
+		$.getJSON(url,params,function (result) {
+			console.log(result);
+			//将信息呈现到页面
+			$("#MainContent").empty();
+			var tdiv = $(".meis_neir_lieb");
+			tdiv.empty();//先清空
+			var ul = $("<ul></ul>");
+			//迭代data
+			for (var i=0;i<result.data.length;i++){
+				var li = $("<li></li>");
+				var lis = doCreateLis(result.data[i]);
+				li.append(lis);
+				ul.append(li);
+			}
+			tdiv.append(ul);
+		});
+	}
+
+
+	
 	
 	function doLoadUser(){
 
@@ -183,6 +231,7 @@
   		  $("#MainContent").load(url);
   	  });
    	} 	
+   	
 </script>
 
 </body>
