@@ -1,5 +1,6 @@
 package com.jack.controller;
 
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -52,8 +53,8 @@ public class UserController {
 	/**保存用户个人修改信息*/
 	@RequestMapping("doSaveUser.do")
 	@ResponseBody
-	public JsonResult doSaveUser(User user,String oldPwd,String newPwd) {
-		userService.doUpdateUser(user,oldPwd,newPwd);
+	public JsonResult doSaveUser(User user) {
+		userService.doUpdateUser(user);
 		return new JsonResult("保存成功");
 	}
 	

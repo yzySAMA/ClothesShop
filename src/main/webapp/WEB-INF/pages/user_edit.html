@@ -10,6 +10,7 @@
 
 
 <script type="text/javascript" src="static/assets/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="static/assets/js/jquery.validate.min.js" ></script>
  <script type="text/javascript" src="static/assets/js/select.js"></script>
 </head>
 <body>
@@ -39,7 +40,8 @@
 			<div class="mod_main">
 			<div class="reg-items" >
               	<span class="reg-label">
-                	<label for="J_Name" id="username" value="">用户名:</label>
+                	<label for="J_Name" value="">用户名:</label>
+                	<span id="username"></span>
               	</span>
             </div>
             
@@ -61,37 +63,6 @@
                 	<label for="sex_nv">男</label>
               	</span>
             </div>
-            
-            <div class="reg-items" >
-              	<span class="reg-label">
-                	<label for="J_Name">旧密码：</label>
-              	</span>
-              	<input id="oldPwd"  class="i-text" type="password">
-              	<!--备注————display使用 inline-block-->
-              	<div class="msg-box">
-                	<div class="msg-box" style="display: none;">
-	                  	<div class="msg-weak" style="display: inline-block;"> <i></i>
-	                    	<div class="msg-cont">键盘大写锁定已打开，请注意大小写!</div>
-	                  	</div>
-                	</div>
-                	<div class="msg-weak err-tips"  style="display:none;"><div>请输入密码</div></div>
-            	</div> 
-            </div>
-             <div class="reg-items" >
-              	<span class="reg-label">
-                	<label for="J_Name">新密码：</label>
-              	</span>
-              	<input id="newPwd"  class="i-text" type="password" > </div>
-            <div class="reg-items" >
-              	<span class="reg-label">
-                	<label for="J_Name">确认密码：</label>
-              	</span>
-              	<input  id="conPwd" class="i-text" type="password" > 
-              	<!--备注————display使用 inline-block-->
-              	<div class="msg-box">
-                	<div class="msg-weak err-tips"  style="display: none;"><div>密码不一样</div></div>
-            	</div> 
-            </div>
             <div class="reg-items" >
               	<span class="reg-label">
                 	<label for="J_Name">手机号码：</label>
@@ -99,7 +70,7 @@
               	<input id="tel" class="i-text" value="" type="text">
               	<!--备注————display使用 inline-block-->
               	<div class="msg-box"> 
-                	<div class="msg-weak err-tips"  style="display:none;"><div>手机号不能为空</div></div>
+                	<div class="msg-weak err-tips" id="tt" style="display:none;"><div>手机号不能为空</div></div>
             	</div> 
             </div> 
             
@@ -128,21 +99,39 @@
 <script type="text/javascript">
 $(function(){
 	//回显用户信息
-	$(".beij_center").load("doFindUser.do",function(result){
-		if(result.state==1){
-		$("#username").html(result.username),
-		$("#name").html(result.name),
-		$("#tel").html(result.telephone),
-		$("#email").html(result.email)
-		}else{
-			alert("出现了不可预知的错误");
-		}
-	});
+	var hh = sessionStorage.getItem("userJson");//获取键为userJson的字符串
+	var pp = JSON.parse(hh);//将字符串抓换成对象
+	var username=pp.data.username;
+	if(!username){
+		return;
+	}
+	$("#loginInfo").html(username);
+		$("#username").html(username),
+		$("#name").val(pp.data.name),
+		$("#tel").val(pp.data.telephone),
+		$("#email").val(pp.data.email)
 	$(".reg-btn").click(function(){
-		if()
-		var params={
-			username:${"#username"}.val(),
+		console.log($("#tel").val());
+		if(!$("#tel").val()){
+			document.getElementById("#tt").style.display="run-in";
+			return;
 		}
+	
+		var params={
+			username:pp.data.username,
+			name:$("#name").val(),
+			sex:$("#sex_nv").val(),
+			email:$("#email").val(),
+			telephone:$("#tel").val()
+		}
+		//保存成功后跳转到主页
+		$.post("doSaveUser.do",params,function(result){
+			if(result.state==1){
+				location.href="homePage?t="+Math.random();
+			}else{
+				alert(result.message);
+			}
+		})
 	})
 })
 

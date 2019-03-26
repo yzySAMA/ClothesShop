@@ -32,6 +32,10 @@ public class UserServiceImpl implements UserService {
 			throw new ServiceException("该用户名已存在");
 		if(StringUtils.isEmpty(user.getName()))
 			throw new ServiceException("姓名不能为空!");
+		if(StringUtils.isEmpty(user.getTelephone()))
+			throw new ServiceException("联系方式不能为空!");
+		if(StringUtils.isEmpty(user.getEmail()))
+			throw new ServiceException("邮箱不能为空!");
 		String uuid=UUIDUtils.newShortUUID().toString();
 		user.setUid(uuid);
 		SimpleHash sh=new SimpleHash("MD5", user.getPassword());
@@ -48,22 +52,15 @@ public class UserServiceImpl implements UserService {
 	}
 	/**更新用户信息*/
 	@Override
-	public int doUpdateUser(User user,String oldPwd,String newPwd) {
+	public int doUpdateUser(User user) {
 		if(user==null)
 			throw new ServiceException("用户不能为空!");
-		if(StringUtils.isEmpty(user.getUsername())||StringUtils.isEmpty(user.getPassword()))
-			throw new ServiceException("用户名和密码不能为空!");
 		if(StringUtils.isEmpty(user.getName()))
 			throw new ServiceException("姓名不能为空!");
-		if(oldPwd==null||oldPwd=="")
-			throw new ServiceException("旧密码不能为空");
-		if(newPwd==null||newPwd=="")
-			throw new ServiceException("新密码不能为空");
-		SimpleHash s1=new SimpleHash("MD5", oldPwd);
-		if(oldPwd!=s1.toHex())
-			throw new ServiceException("旧密码错误");
-		SimpleHash s2=new SimpleHash("MD5", newPwd);
-			user.setPassword(s2.toHex());
+		if(StringUtils.isEmpty(user.getEmail()))
+			throw new ServiceException("邮箱不能为空");
+		if(StringUtils.isEmpty(user.getTelephone()))
+			throw new ServiceException("联系方式不能为空");
 			int rows= userMapper.doUpdateUser(user);
 			if(rows==0)
 				throw new ServiceException("保存失败");
