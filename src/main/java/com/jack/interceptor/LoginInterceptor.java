@@ -20,7 +20,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 		// 在拦截点执行前拦截，如果返回true表示放行
 		HttpSession session = request.getSession();
 		if (session.getAttribute("login_admin")==null) {
-			System.out.println(session.getAttribute("login_admin"));
+			//System.out.println(session.getAttribute("login_admin"));
 			response.sendRedirect(request.getContextPath()+"/adminLoginUI");
 			return false;
 		}

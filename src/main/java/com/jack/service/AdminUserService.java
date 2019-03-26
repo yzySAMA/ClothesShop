@@ -11,6 +11,4 @@ public interface AdminUserService {
 	PageInfo<User> findPageByUsername(Integer startPage, Integer pageSize, String username);
 	/**导出用户信息查询*/
 	List<User> findAllObjects();
-	/**查询管理员用户信息*/
-	User findByUsername(String username, String password);
 }

@@ -13,6 +13,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.druid.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.jack.common.exception.ServiceException;
 import com.jack.common.vo.JsonResult;
 import com.jack.entity.User;
 import com.jack.service.AdminUserService;
@@ -131,12 +134,21 @@ public class AdminUserController {
 	@RequestMapping("doLogin")
 	@ResponseBody
 	public JsonResult doLogin(String username, String password, HttpSession session) {
-		System.out.println(username + ";" + password);
-		User admin = adminUserService.findByUsername(username, password);
-		System.out.println(admin);
-		System.out.println(admin.getName());
-		session.setAttribute("login_admin", admin.getUsername());
-		return new JsonResult("欢迎登录");
+		if (StringUtils.isEmpty(username)) {
+			throw new ServiceException("用户名不能为空");
+		}
+		if (!"admin".equals(username)) {
+			throw new ServiceException("用户名或密码不正确");
+		}
+		SimpleHash pwd = new SimpleHash("MD5", password);
+		String apwd = pwd.toHex();
+		if (StringUtils.isEmpty(password)||!"e10adc3949ba59abbe56e057f20f883e".equals(apwd)) {
+			throw new ServiceException("用户名或密码不正确");
+		}
+		if ("e10adc3949ba59abbe56e057f20f883e".equals(apwd)) {
+			session.setAttribute("login_admin", username);
+		}
+		return new JsonResult("login ok");
 	}
 
 	/** 管理员注销 */

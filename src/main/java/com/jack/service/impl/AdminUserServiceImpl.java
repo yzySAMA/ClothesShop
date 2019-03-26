@@ -53,18 +53,4 @@ public class AdminUserServiceImpl implements AdminUserService{
 		List<User> list = userMapper.findAllObjects();
 		return list;
 	}
-	@Override
-	public User findByUsername(String username, String password) {
-		if (StringUtils.isEmpty(username)) {
-			throw new ServiceException("用户名不能为空");
-		}
-		User admin = userMapper.findByUsername(username);
-		if (admin==null) {
-			throw new ServiceException("用户名或密码错误");
-		}
-		if (!admin.getPassword().equals(password)) {
-			throw new ServiceException("密码不正确");
-		}
-		return admin;
-	}
 }

@@ -44,6 +44,7 @@
        			<mvc:mapping path="/product/*"/>
        			<mvc:mapping path="/category/*"/> -->
        			<mvc:mapping path="/startUI"/>
+       			<mvc:mapping path="/startUI.do"/>
        			<!-- 除去登录页面都要拦截 -->
        			<!-- <mvc:exclude-mapping path=""/> -->
        			<!-- <bean class="com.jack.interceptor.LoginInterceptor"></bean> -->
