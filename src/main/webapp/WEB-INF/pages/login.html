@@ -7,6 +7,9 @@
 <title>MyShop——登录</title>
 <link rel="stylesheet" type="text/css" href="static/assets/css/index.css">
 <link rel="stylesheet" type="text/css" href="static/assets/css/ziy.css">
+<!-- Bootstrap 3.3.7 -->
+<link rel="stylesheet"
+	href="static/assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
 <script src="static/assets/js/jquery-1.11.3.min.js"></script>
  
 </head> 
@@ -15,7 +18,6 @@
 <div class="beij_center">
 	<div class="dengl_logo">
 		<img src="static/assets/images/logo1.png">
-		<h1>欢迎登录</h1>
 	</div>
 </div>
 <div class="dengl_beij">
@@ -27,41 +29,18 @@
 		<div class="login_form">
 			<div class="login_tab">
 				<h2>欢迎登录</h2>
-				<div class="dengl_erwm">
-					<a href="#"><img src="static/assets/images/er_wm.png"></a>
-					<div class="tanc_erwm_kuang">
-						<img src="static/assets/images/mb_wangid.png">
-						<div class="qrcode_panel">
-                            <ul>
-                                <li class="fore1">
-									<span>打开</span>
-                                    <a href="#" target="_blank"> <span class="red">手机MyShop</span></a>
-                                </li>
-								<li>扫描二维码</li>
-                            </ul>
-                        </div> 
-					</div>
-				</div> 
+
 			</div>
-			<form method="post">
+			<form method="post" class="form-horizontal">
 			<div class="kengl_kuang">
 				<div class="txt_kuang">
-					<input type="text" class="itxt" id="username" placeholder="邮箱/用户名/已验证手机">
-					<input type="password" class="itxt" id="password" placeholder="密码">
+					<input type="text" class="itxt form-control" id="username" placeholder="用户名">
+					<input type="password" class="itxt form-control" id="password" placeholder="密码">
 				</div>
-				<div class="remember">
-					<div class="fl">
-						<input type="checkbox" >
-						<label for="autoLoginFlag">自动登录</label>
-					</div>
-					<div class="fr">
-						<a href="#" class="fl" target="_blank" title="忘记密码">忘记密码?</a> 
-					</div>
-				</div>
-				<input type="button" tabindex="5" id ="login" value="登 录" class="login">
+				<input type="button" id ="login" value="登 录" class="login btn btn-primary form-control" style="width:40%" >
 			</div>
-			<div class="corp_login">
-				<div class="regist_link"><a href="register" ><b></b>立即注册</a></div>
+			<div class="corp_login ">
+				<div class="regist_link"><a href="register.html"><b></b>立即注册</a></div>
 			</div>
 		</div> 
 	</div>
