@@ -60,7 +60,7 @@ function doCreateLis(data) {
 			"<div class='meis_neir'>"+
 			"<span class='motaikuang' value='"+data.pid+"'><a href='#' data-toggle='modal' data-target='#quick-view-modal-container'>"+data.pname+"</a></span>"+
 			"<p>库存："+data.pnumber+"</p>"+
-			"<h4><span>￥: "+data.price+"</span> <del>门面价: ￥"+(data.price)*1.2+"</del> </h4>"+
+			"<h4><span>￥: "+data.price+"</span> <del>门面价: ￥"+((data.price)*1.2).toFixed(2)+"</del> </h4>"+
 			"</div>";
 	return lis;
 }

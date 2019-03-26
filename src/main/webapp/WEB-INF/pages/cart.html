@@ -38,7 +38,7 @@
 		</div>
 		<div class="jies_ann_bei">
 			<p>已选 <em id="zongjianshu">0</em> 件商品 总计（不含运费）：<span id="subtotal">￥0.00</span></p>
-			<a href="tij_dingd.html" class="order_btn">去结算</a>
+			<a href="#" class="order_btn">去结算</a>
 		</div>
 	</div>
 </div>
@@ -55,7 +55,13 @@ $(function() {
 	$(".container").on("change",".jdcheckbox",doAddUp)
 	/* 购物项删除 */
 	$(".jies_beij").on("click",".cartitemdelete",doDeleteScitem)
+	$(".jies_ann_bei").on("click",".order_btn",doPayOrder)
 })
+
+function doPayOrder() {
+	$("#MainContent").load("doPayOrderUI");
+}
+
 
 /* 展示购物车列表 */
 function doShowCartList() {

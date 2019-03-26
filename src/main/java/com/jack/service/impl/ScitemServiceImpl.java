@@ -16,6 +16,7 @@ import com.jack.entity.ScitemExample;
 import com.jack.entity.Shopcart;
 import com.jack.entity.ShopcartExample;
 import com.jack.entity.vo.MyCartItemVo;
+import com.jack.service.ProductService;
 import com.jack.service.ScitemService;
 
 @Service
@@ -27,6 +28,8 @@ public class ScitemServiceImpl implements ScitemService{
 	ShopcartMapper shopcartMapper;
 	@Autowired
 	CartItemMapper cartItemMapper;
+	@Autowired
+	ProductService productService;
 	
 	/**添加商品到购物车*/
 	@Override
@@ -42,14 +45,26 @@ public class ScitemServiceImpl implements ScitemService{
 		}
 		String scid = selectByExample.get(0).getScid();
 		scitem.setScid(scid);
-		
+		//根据pid,scid查看scitem表是否已经有此商品
+		ScitemExample example2 = new ScitemExample();
+		example2.createCriteria().andScidEqualTo(scid).andPidEqualTo(scitem.getPid());
+		List<Scitem> list2 = scitemMapper.selectByExample(example2);
+		//如果购物项中已经有该商品，那么将其count增加
+		if (list2.size() != 0) {
+			scitem.setCount((Integer.parseInt(scitem.getCount())+Integer.parseInt(list2.get(0).getCount()))+"");
+			scitem.setSubtotal((Integer.parseInt(scitem.getSubtotal())+Integer.parseInt(list2.get(0).getSubtotal()))+"");
+			int rows = scitemMapper.updateByExample(scitem, example2);
+			return rows;
+		}
+		//否则新增商品
 		int rows = scitemMapper.insert(scitem);
 		if (rows == 0) {
 			throw new ServiceException("添加商品到购物车失败");
 		}
 		return rows;
 	}
-
+	
+	/**展示购物车信息*/
 	@Override
 	public List<MyCartItemVo> doShowCartList(String uid) {
 		ShopcartExample example = new ShopcartExample();
@@ -64,6 +79,7 @@ public class ScitemServiceImpl implements ScitemService{
 		return doShowCartList;
 	}
 	
+	/**删除购物项*/
 	@Override
 	public int doDeleteScitem(String[] array) {
 		List<String> list = Arrays.asList(array);

@@ -11,6 +11,25 @@ body {
   font-family: "Rubik", sans-serif;
   }
 
+/* 2019/3/26 支付订单样式 */
+/* =========================== */
+h2{
+	margin-left: 5%;
+	margin-top: 30px;
+}
+.table{
+	width: 90%;
+	margin-left: 5%;
+	border: 1px solid #000000;
+}
+.btn-primary{
+	margin-right: 5%;
+}
+.well.m-t {
+    margin-left: 5%;
+}
+/* ============================= */
+
 .product-feature-details h2.product-price {
   position: relative; }
   .product-feature-details h2.product-price span.main-price {

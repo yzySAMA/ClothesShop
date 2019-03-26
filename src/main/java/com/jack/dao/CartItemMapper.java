@@ -8,4 +8,6 @@ public interface CartItemMapper {
 	
 	List<MyCartItemVo> doShowCartList(String scid);
 	
+	String selectCountByPid(String pid);
+
 }
