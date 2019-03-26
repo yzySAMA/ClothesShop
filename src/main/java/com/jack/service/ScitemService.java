@@ -10,4 +10,6 @@ public interface ScitemService  {
 	int doAddScitem(Scitem scitem,String uid);
 	
 	List<MyCartItemVo> doShowCartList(String uid);
+
+	int doDeleteScitem(String[] array);
 }

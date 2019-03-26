@@ -20,7 +20,6 @@
 		<div class="cart-col-6">
 			<div class="cart-good-amount">小计</div>
 		</div>
-		<div class="cart-col-7">操作</div>
 	</div>
 </div>
 
@@ -35,7 +34,7 @@
 		</div>
 		<div class="qianm_shanc_yvf">
 			<span>全选</span>
-			<a href="#">删除</a>
+			<span class='cartitemdelete'><a href="#">删除</a></span>
 		</div>
 		<div class="jies_ann_bei">
 			<p>已选 <em id="zongjianshu">0</em> 件商品 总计（不含运费）：<span id="subtotal">￥0.00</span></p>
@@ -47,10 +46,15 @@
 
 <script>
 $(function() {
+	/* 展示购物车列表 */
 	doShowCartList();
+	/* 全选框 */
 	$(".beij_center").on("change",".jdcheckbox",doChangeCheckAllState1)
 	$(".jies_beij").on("change","#zheshi",doChangeCheckAllState2)
+	/* 点击复选框统计商品件数及价格 */
 	$(".container").on("change",".jdcheckbox",doAddUp)
+	/* 购物项删除 */
+	$(".jies_beij").on("click",".cartitemdelete",doDeleteScitem)
 })
 
 /* 展示购物车列表 */
@@ -81,16 +85,14 @@ function doShowCartList() {
 			var div4 = $("<div class='cart-col-4'><div class='cart-good-real-price '>"+dataa.price+"</div></div>");
 			var div5 = $("<div class='cart-col-5'>"+dataa.count+"</div>");
 			var div6 = $("<div class='cart-col-6 '><div class='cart-good-amount'>"+dataa.subtotal+"</div></div>");
-			var div7 = $("<div class='cart-col-7'><div class='cart-good-fun delfixed'><a href='#'>删除</a></div></div>");
 			
 			div3456.append(div3,div4,div5,div6);
-			divw.append(div1,div2,div3456,div7);
+			divw.append(div1,div2,div3456);
 			divlw.append(divw);
 			tdiv.append(divlw);
 		}
 	});
 }
-
 
 //全选复选框事件，点击全选下面的复选框全勾上
 function doChangeCheckAllState1() {
@@ -125,7 +127,35 @@ function doAddUp() {
 	}
 	$("#zongjianshu").html(y);
 	$("#subtotal").html(z);
-	return array;
+	$(".container").data("array",array);
+}
+
+/* 购物项删除 */
+function doDeleteScitem() {
+	var da2 = $(".container").data("data");
+	var array = $(".container").data("array")
+	if(!array){
+		alert("请先选择");
+		return;
+	}
+	/* 获取选中的scitemid */
+	var arraysc = [];
+	for(var x in array){
+		arraysc.push(da2.data[array[x]].scitemid)
+	}
+	
+	var url = "doDeleteScitem";
+	var params = {
+		"array": arraysc.toString()
+	}
+	$.post(url,params,function(result){
+		if (result.state == 1) {
+			alert(result.message);
+			$("#MainContent").load("cartUI");
+		}else{
+			alert(result.message);
+		}
+	})
 }
 
 

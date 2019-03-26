@@ -1,5 +1,6 @@
 package com.jack.controller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +34,14 @@ public class ScitemController {
 		return new JsonResult(doShowCartList);
 	}
 	
+	@RequestMapping("doDeleteScitem")
+	@ResponseBody
+	public JsonResult doDeleteScitem(String[] array){
+		scitemService.doDeleteScitem(array);
+		System.out.println(Arrays.toString(array));
+		return new JsonResult("删除成功");
+	}
+	
 }
+
+

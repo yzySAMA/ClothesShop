@@ -4,13 +4,14 @@ public class MyCartItemVo {
 	private String pimage;
 	private String pname;
 	private Double price;
+	private String scitemid;
 	private String count;
 	private String subtotal;
 
 	@Override
 	public String toString() {
-		return "MyCartItemVo [pimage=" + pimage + ", pname=" + pname + ", price=" + price + ", count=" + count
-				+ ", subtotal=" + subtotal + "]";
+		return "MyCartItemVo [pimage=" + pimage + ", pname=" + pname + ", price=" + price + ", scitemid=" + scitemid
+				+ ", count=" + count + ", subtotal=" + subtotal + "]";
 	}
 	public String getPimage() {
 		return pimage;
@@ -41,6 +42,12 @@ public class MyCartItemVo {
 	}
 	public void setSubtotal(String subtotal) {
 		this.subtotal = subtotal;
+	}
+	public String getScitemid() {
+		return scitemid;
+	}
+	public void setScitemid(String scitemid) {
+		this.scitemid = scitemid;
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.jack.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.jack.dao.CartItemMapper;
 import com.jack.dao.ScitemMapper;
 import com.jack.dao.ShopcartMapper;
 import com.jack.entity.Scitem;
+import com.jack.entity.ScitemExample;
 import com.jack.entity.Shopcart;
 import com.jack.entity.ShopcartExample;
 import com.jack.entity.vo.MyCartItemVo;
@@ -57,9 +59,22 @@ public class ScitemServiceImpl implements ScitemService{
 			throw new ServiceException("请先登录");
 		}
 		String scid = selectByExample.get(0).getScid();
-		System.out.println(scid);
 		
 		List<MyCartItemVo> doShowCartList = cartItemMapper.doShowCartList(scid);
 		return doShowCartList;
 	}
+	
+	@Override
+	public int doDeleteScitem(String[] array) {
+		List<String> list = Arrays.asList(array);
+		ScitemExample example = new ScitemExample();
+		example.createCriteria().andScitemidIn(list);
+		int rows = scitemMapper.deleteByExample(example);
+		if (rows == 0) {
+			throw new ServiceException("该数据可能已经被删除");
+		}
+		
+		return rows;
+	}
+	
 }

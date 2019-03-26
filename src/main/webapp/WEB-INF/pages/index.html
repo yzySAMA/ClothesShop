@@ -105,7 +105,6 @@ function doAddToCart() {
 	}
 	$.post(url,params,function(result){
 		if (result.state == 1) {
-			sessionStorage.setItem("allJson", JSON.stringify(result));
 			alert(result.message);
 			location.href="homePage"
 		}else{

@@ -4,7 +4,7 @@
 	
 	
 	<select id="doShowCartList" resultType="com.jack.entity.vo.MyCartItemVo">
-		select pimage,pname,price,count,subtotal from scitem s , product p WHERE s.pid = p.pid AND scid = #{scid};
+		select pimage,pname,price,scitemid,count,subtotal from scitem s , product p WHERE s.pid = p.pid AND scid = #{scid};
 	</select>
 	
 	
