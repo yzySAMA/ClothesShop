@@ -46,11 +46,17 @@
 	   $("#pageId").load("doPageUI.do",function(){
 		   doGetObjects();
 	   });
+	   doClear();
 	   $(".input-group-btn")
 	   .on("click",".btn-search",doQueryObjects)
 	   .on("click",".btn-add,.btn-update",doLoadEditUI);
 	   $("#tbodyId").on("click", ".btn-delete", doDeleteById);
    });
+   
+   //清空#mainContent
+   function doClear(){
+	   $("#mainContentId").removeData();
+   }
    
  	//删除订单信息
 	function doDeleteById() {
