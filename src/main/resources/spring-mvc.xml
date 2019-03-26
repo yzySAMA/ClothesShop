@@ -34,6 +34,22 @@
            <property name="Prefix" value="/WEB-INF/pages/"/>
            <property name="Suffix" value=".html"/>
        </bean>
+       
+       <!-- 配置拦截器 -->
+       <mvc:interceptors>
+	        <!-- 登录拦截器 -->
+       		<mvc:interceptor >
+       			<!-- <mvc:mapping path="/user/*"/>
+       			<mvc:mapping path="/orders/*"/>
+       			<mvc:mapping path="/product/*"/>
+       			<mvc:mapping path="/category/*"/> -->
+       			<mvc:mapping path="/startUI"/>
+       			<!-- 除去登录页面都要拦截 -->
+       			<!-- <mvc:exclude-mapping path=""/> -->
+       			<!-- <bean class="com.jack.interceptor.LoginInterceptor"></bean> -->
+       			<ref bean="loginInterceptor"/>
+       		</mvc:interceptor>
+       </mvc:interceptors>
 </beans>
 
 

@@ -1,0 +1,122 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="box">
+			<div class="box-header">
+				<h3 class="box-title">用户管理</h3>
+
+				<div class="box-tools">
+					<div class="input-group input-group-sm" style="width: 350px;">
+						<input type="text" name="table_search" id="searchNameId"
+							class="form-control pull-right" placeholder="用户名">
+
+						<div class="input-group-btn">
+							<button type="button" class="btn btn-default btn-search">
+								<i class="fa fa-search"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /.box-header -->
+			<div class="box-body table-responsive no-padding">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>用户名</th>
+							<th>姓名</th>
+							<th>邮箱</th>
+							<th>联系方式</th>
+							<th>性别</th>
+						</tr>
+					</thead>
+					<tbody id="tbodyId"></tbody>
+				</table>
+			</div>
+			<div>
+				<input id="export" type="button" class="btn btn-default btn-export"
+				value="导出Excel" style="float: left;margin:10px 0 0 6px" />
+				<div id="pageId" class="box-footer clearfix"></div>
+			</div>
+			<!-- /.box-body -->
+		</div>
+		<!-- /.box -->
+	</div>
+</div>
+<script type="text/javascript">
+	
+	$(document).ready(function() {
+		$("#pageId").load("doPageUI.do", function() {
+			doGetObjects();
+		});
+		$(".input-group-btn").on("click", ".btn-search", doQueryObjecet);
+		//用户信息导出
+		$("#export").click(function() {
+			var href = "user/doExportUserFile.do";
+			window.location.href = href;
+			return false;
+		});
+	});
+
+	function doQueryObjecet() {
+		$("#pageId").data("pageNum",1);
+		doGetObjects();
+	}
+	//页面加载完成异步加载当前页数据
+	function doGetObjects() {
+		var url = "user/doFindObject.do";
+		var pageNum = $("#pageId").data("pageNum");
+		if (!pageNum)
+			pageNum = 1;
+		var params = {
+			"pageNum" : pageNum
+		}
+		params.username = $("#searchNameId").val().trim();
+		//console.log(params);
+		$.getJSON(url, params, function(result) {
+			console.log(result);
+			doHandleResponseResult(result);
+		});
+	}
+	// 处理响应结果
+	function doHandleResponseResult(result) {
+		if (result.state == 1) {
+			// 1.更新tbody中的内容(当前页记录)
+			doSetTableBodyRows(result.data.list);
+			// 2.更新pageId位置内容(分页数据)
+			doSetPagination(result.data);
+		} else {
+			alert(result.message);
+		}
+	}
+	//通过服务端返回的数据初始化页面
+	function doSetTableBodyRows(data) {
+		//1.获取tbody对象，并清空内容
+		var tBody = $("#tbodyId");
+		tBody.empty();
+		//2.迭代data内容将数据追加到tbody中
+		for ( var i=0 ; i<data.length;i++) {
+			// 1.创建tr对象
+			var tr = $("<tr></tr>");
+			tr.data("rowData", data[i]);
+			// 2.创建多个td对象
+			var tds = doCreateTds(data[i]);
+			// 3.将td对象追加到tr中
+			tr.append(tds);
+			// 4.将tr追加到tbody中
+			tBody.append(tr);
+		}
+	}
+	// 创建td对象
+	function doCreateTds(row) {
+		console.log(row);
+		var tds = "<td>" + row.uid + "</td>" + "<td>" + row.username + "</td>"
+				+ "<td>" + row.name + "</td>" + "<td>" + row.email + "</td>"
+				+ "<td>" + row.telephone + "</td>" + "<td>" + row.sex + "</td>";
+		return tds;
+	}
+</script>
+
+
+
+

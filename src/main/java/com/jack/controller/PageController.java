@@ -36,11 +36,11 @@ public class PageController {
 		return "product_Info";
 	}
 
-	@RequestMapping("cartUI.do")
+	@RequestMapping("cartUI")
 	public String cartUI() {
 		return "cart";
 	}
-	@RequestMapping("doLoginUI.do")
+	@RequestMapping("doLoginUI")
 	public String doLoginUI() {
 		return "login";
 	}

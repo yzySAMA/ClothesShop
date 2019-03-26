@@ -62,6 +62,14 @@ public class AdminOrdersServiceImpl implements AdminOrdersService {
 		}
 		return rows;
 	}
+	/**
+	 * 查询所有订单信息用于订单信息导出到Excel
+	 */
+	@Override
+	public List<Orders> findAllObjects() {
+		List<Orders> list = ordersMapper.selectByExample(null);
+		return list;
+	}
 	
 
 }

@@ -2835,8 +2835,6 @@ font:normal 14px/32px "Microsoft YaHei";
 	margin-bottom: 15px;
 }
 .meis_neir_lieb li .meis_tup_kuang{
-	width: 286px;
-	height: 194px;
 	overflow: hidden;
 	display: block;
 }
@@ -2883,7 +2881,7 @@ font:normal 14px/32px "Microsoft YaHei";
 	float: left;
 }
 .dengl_logo h1{
-	margin:50px 0 0 30px;
+	margin:30px 0 0 30px;
 	font:24px/24px "微软雅黑";
 	color: #4c4d50 ;
 	float: left;
@@ -4783,10 +4781,10 @@ a.btn-again {
 }
  
 .cart-col-2 {
-    width: 91px;
+    width: 120px;
 }
 .cart-col-3 {
-    width:420px
+    width:400px
 }
 .cart-col-4 {
     width: 185px;
@@ -4798,7 +4796,7 @@ a.btn-again {
     font-weight: 400;
 }
 .cart-col-6 {
-    width: 200px;
+    width: 220px;
     font-weight: 700;
 }
 .cart-good-amount {
@@ -4835,6 +4833,7 @@ a.btn-again {
 
 .cart-shop-good{
     overflow: hidden;
+    height:90px;
 }
 .cart-shop-good .cart-col-1, .cart-shop-good .cart-col-2, .cart-shop-good .cart-col-3, .cart-shop-good .cart-col-4, .cart-shop-good .cart-col-5, .cart-shop-good .cart-col-6, .cart-shop-good .cart-col-7 {
     padding: 20px 0;

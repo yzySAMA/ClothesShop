@@ -30,7 +30,11 @@
 					<tbody id="tbodyId"></tbody>
 				</table>
 			</div>
-			<div id="pageId" class="box-footer clearfix"></div>
+			<div>
+				<input id="export" type="button" class="btn btn-default btn-export"
+				value="导出Excel" style="float: left;margin:10px 0 0 6px" />
+				<div id="pageId" class="box-footer clearfix"></div>
+			</div>
 			<!-- /.box-body -->
 		</div>
 		<!-- /.box -->
@@ -45,6 +49,12 @@
 		 $(".input-group-btn")
 		   .on("click",".btn-deleteAll",doDeleteAll)
 		$("#tbodyId").on("click", ".btn-delete", doDeleteById);
+		 //订单信息Excel导出
+		 $("#export").click(function() {
+				var href = "orders/doExportOrderFile.do";
+				window.location.href = href;
+				return false;
+			});
 	});
 	// 一键删除无效订单
 	function doDeleteAll() {

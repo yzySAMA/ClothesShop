@@ -25,6 +25,7 @@
 		// data函数用于基于某个对象存储key/value
 		$("#pageId").data("pages", records.pages);
 		$("#pageId").data("pageNum", records.pageNum);
+		//console.log(records.pageNum);
 		// data函数语法data(key,[value]);//key,value自己基于业务定义
 		// data函数中没有value就是取值,例如data(key)表示取值
 	}
@@ -47,7 +48,7 @@
 			pageNum = pages;
 		}
 		$("#pageId").data("pageNum", pageNum);
-		// console.log(pageCurrent);
+		//console.log(pageNum);
 		// 4.基于新的页码值进行下次查询
 		doGetObjects();
 		

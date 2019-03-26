@@ -1,0 +1,83 @@
+/*-----------------------------------------------------------------------------------
+ 
+    URL: http://www.bootstrapmb.com
+ 
+-----------------------------------------------------------------------------------*/
+ 
+/*-- Google Font --*/
+@import url("https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i|Rubik:300,300i,400,400i,500,500i,700,700i");
+/*-- Common Style --*/
+body {
+  font-family: "Rubik", sans-serif;
+  }
+
+.product-feature-details h2.product-price {
+  position: relative; }
+  .product-feature-details h2.product-price span.main-price {
+    font-size: 28px;
+    font-weight: 500;
+    color: #cea45f; }
+  .product-feature-details h2.product-price span.discounted {
+    font-size: 24px;
+    color: #999999;
+    padding-right: 5px;
+    text-decoration: line-through; }
+  .product-feature-details h2.product-price span.discounted-price {
+    font-size: 28px;
+    font-weight: 500;
+    color: #cea45f; }
+  .product-feature-details h2.product-price span.discount-percentage {
+    font-weight: 700;
+    font-size: 12px;
+    color: white;
+    padding: 2px 5px 0;
+    background: #cea45f;
+    text-transform: uppercase;
+    line-height: 21px;
+    display: inline-block;
+    font-family: "Lato", sans-serif;
+    position: absolute;
+    top: 5px;
+    margin-left: 10px; }
+
+.product-feature-details p.product-description {
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  padding: 20px 0; }
+
+.quickview-product-image-slider {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center; }
+
+.quick-view-modal-container .modal-dialog {
+  max-width: 900px; }
+
+.add-to-cart-btn{
+	margin-top:30px;
+}
+
+.pop-okkk {
+    padding: 8px 15px;
+    margin: 15px 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: #337AB7;
+    color: #fff;
+    cursor: pointer;
+}
+.mb-20{
+	margin-top:30px;
+}
+
+
+
+
+
+
+
+
+
+

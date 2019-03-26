@@ -1,7 +1,7 @@
 <div class="yiny yiny_gouwc">
 	<div class="beij_center">
 		<div class="dengl_logo">
-			<h1>购物车</h1>
+			<h1 style="color:red">购物车</h1>
 		</div>
 	</div>
 </div>
@@ -11,7 +11,7 @@
 		<div class="cart-col-1">
 			<input type="checkbox" class="jdcheckbox" >
 		</div>
-		<div class="cart-col-2">全选</div><!-- $page.site 主站 团购 抢购   style -->
+		<div class="cart-col-2">&nbsp;&nbsp;全选</div><!-- $page.site 主站 团购 抢购   style -->
 		<div class="cart-col-3">商品信息</div>
 		<div class="cart-col-4">
 			<div class="cart-good-real-price">单价</div>
@@ -25,93 +25,112 @@
 </div>
 
 <div class="container">
-	<div class="cart-shop-header">
-		<div class="cart-col-1">
-			<input type="checkbox" class="jdcheckbox" >
-		</div>
-		<div class="cart-col-2"><span class="gouw_c_dianp">罗莱LOVO自营官方旗舰店 </span></div>
-	</div>
-	<div class="cart-shop-goods dangq_honh">
-		<div class="cart-shop-good">
-			<div class="cart-col-1">
-				<input type="checkbox" class="jdcheckbox" >
-			</div>
-			<div class="cart-col-2" style="height: 82px;">
-				<a href="" target="_blank" class="g-img"><img src="images/xiangqtu_1.jpg" alt=""></a>
-			</div>
-			<div class="fl houj_c"> 
-				<div class="cart-dfsg"><div class="cart-good-name"><a href="#" target="_blank">ThinkPad X1 Carbon(20HRA007CD)14英寸笔记本电脑(i5-7200U 8G ...</a></div></div>
-				<div class="cart-good-pro"></div>
-				<div class="cart-col-4"><div class="cart-good-real-price "><!--主品-->¥&nbsp;9999.00</div><div class="red"></div></div>
-				<div class="cart-col-5">
-					<div class="gui-count cart-count" >
-						<a href="#" gui-count-sub="" class="gui-count-btn gui-count-sub gui-count-disabled">-</a>
-						<a href="#" gui-count-add="" class="gui-count-btn gui-count-add">+</a>
-						<div class="gui-count-input"><input dytest="" class="" type="text" value="1"></div>
-					</div>
-				</div>
-				<div class="cart-col-6 ">
-				<div class="cart-good-amount">¥&nbsp;9999.00</div><!-- 重量展示(只展示全球百货的重量) --></div>
-			</div>
-			<div class="cart-col-7">
-				<div class="cart-good-fun delfixed">
-					<a href="#">删除</a>
-				</div>
-				<div class="cart-good-fun">
-					<a href="#">移入收藏夹</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="cart-shop-header">
-		<div class="cart-col-1">
-			<input type="checkbox" class="jdcheckbox" >
-		</div>
-		<div class="cart-col-2"><span class="gouw_c_dianp">罗莱LOVO自营官方旗舰店 </span></div>
-	</div>
-	<div class="cart-shop-goods">
-		<div class="cart-shop-good">
-			<div class="cart-col-1">
-				<input type="checkbox" class="jdcheckbox" >
-			</div>
-			<div class="cart-col-2" style="height: 82px;">
-				<a href="" target="_blank" class="g-img"><img src="images/xiangqtu_1.jpg" alt=""></a>
-			</div>
-			<div class="fl houj_c"> 
-				<div class="cart-dfsg"><div class="cart-good-name"><a href="#" target="_blank">ThinkPad X1 Carbon(20HRA007CD)14英寸笔记本电脑(i5-7200U 8G ...</a></div></div>
-				<div class="cart-good-pro"></div>
-				<div class="cart-col-4"><div class="cart-good-real-price "><!--主品-->¥&nbsp;9999.00</div><div class="red"></div></div>
-				<div class="cart-col-5">
-					<div class="gui-count cart-count" >
-						<a href="#" gui-count-sub="" class="gui-count-btn gui-count-sub gui-count-disabled">-</a>
-						<a href="#" gui-count-add="" class="gui-count-btn gui-count-add">+</a>
-						<div class="gui-count-input"><input dytest="" class="" type="text" value="1"></div>
-					</div>
-				</div>
-				<div class="cart-col-6 ">
-				<div class="cart-good-amount">¥&nbsp;9999.00</div><!-- 重量展示(只展示全球百货的重量) --></div>
-			</div>
-			<div class="cart-col-7">
-				<div class="cart-good-fun delfixed">
-					<a href="#">删除</a>
-				</div>
-			</div>
-		</div>
-	</div>
+	<!-- 购物车列表处  -->
 </div>
 
 <div class="jies_beij">
 	<div class="beij_center over_dis">
 		<div class="cart-col-1 cart_jies">
-			<input type="checkbox" class="jdcheckbox" >
+			<input type="checkbox" class="jdcheckbox" id="zheshi">
 		</div>
 		<div class="qianm_shanc_yvf">
 			<span>全选</span>
 			<a href="#">删除</a>
 		</div>
 		<div class="jies_ann_bei">
-			<p>已选 <em>1</em> 件商品 总计（不含运费）：<span>￥9999.00</span></p>
+			<p>已选 <em id="zongjianshu">0</em> 件商品 总计（不含运费）：<span id="subtotal">￥0.00</span></p>
 			<a href="tij_dingd.html" class="order_btn">去结算</a>
 		</div>
 	</div>
 </div>
+
+
+<script>
+$(function() {
+	doShowCartList();
+	$(".beij_center").on("change",".jdcheckbox",doChangeCheckAllState1)
+	$(".jies_beij").on("change","#zheshi",doChangeCheckAllState2)
+	$(".container").on("change",".jdcheckbox",doAddUp)
+})
+
+/* 展示购物车列表 */
+function doShowCartList() {
+	var url = "doShowCartList.do";
+	var userJson = JSON.parse(sessionStorage.getItem("userJson"));
+	var uid = userJson.data.uid;
+	var params = {
+		"uid": uid
+	};
+	//基于jQuery的getJSON函数向服务端发送异步请求
+	$.getJSON(url,params,function (result) {
+		console.log(result);
+		//将信息呈现到页面
+		var tdiv = $(".container");
+		tdiv.empty();//先清空
+		$(".container").data("data",result);
+		//迭代购物项
+		for (var i=0;i<result.data.length;i++){
+			var dataa = result.data[i];
+			
+			var divlw = $("<div class='cart-shop-goods'></div>");
+			var divw = $("<div class='cart-shop-good'></div>");
+			var div1 = $("<div class='cart-col-1'><input type='checkbox' class='jdcheckbox' value='"+i+"'></div>");	
+			var div2 = $("<div class='cart-col-2' style='height: 82px;'> <a class='g-img'><img src='"+dataa.pimage+"'></a></div>");
+			var div3456 = $("<div class='fl houj_c' id='dddd'></div>");
+			var div3 = $("<div class='cart-col-3'><div class='cart-good-name'>"+dataa.pname+"</div></div>");
+			var div4 = $("<div class='cart-col-4'><div class='cart-good-real-price '>"+dataa.price+"</div></div>");
+			var div5 = $("<div class='cart-col-5'>"+dataa.count+"</div>");
+			var div6 = $("<div class='cart-col-6 '><div class='cart-good-amount'>"+dataa.subtotal+"</div></div>");
+			var div7 = $("<div class='cart-col-7'><div class='cart-good-fun delfixed'><a href='#'>删除</a></div></div>");
+			
+			div3456.append(div3,div4,div5,div6);
+			divw.append(div1,div2,div3456,div7);
+			divlw.append(divw);
+			tdiv.append(divlw);
+		}
+	});
+}
+
+
+//全选复选框事件，点击全选下面的复选框全勾上
+function doChangeCheckAllState1() {
+	var flag = $(".jdcheckbox").prop("checked");
+	$(".container input[type='checkbox']").each(function () {
+		$(this).prop("checked",flag);
+	})
+	doAddUp();
+}
+function doChangeCheckAllState2() {
+	var flag = $("#zheshi").prop("checked");
+	$(".container input[type='checkbox']").each(function () {
+		$(this).prop("checked",flag);
+	})
+	doAddUp();
+}
+
+/* 统计选中的复选框的商品件数及价格 */
+function doAddUp() {
+	var array = [];
+	$(".container input[type='checkbox']").each(function () {
+		if ($(this).prop("checked")){
+			array.push($(this).val());
+		}
+	})
+	var da1 = $(".container").data("data");
+	var y = 0;
+	var z = 0;
+	for(var x in array){
+		y += parseInt(da1.data[array[x]].count);
+		z += parseInt(da1.data[array[x]].subtotal);
+	}
+	$("#zongjianshu").html(y);
+	$("#subtotal").html(z);
+	return array;
+}
+
+
+
+</script>
+
+
+

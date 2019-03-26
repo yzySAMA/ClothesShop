@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html>   
+<head> 
+<meta charset="utf-8">
+<title>MyShop——个人信息</title>
+<link rel="stylesheet" type="text/css" href="static/assets/css/index.css">
+<link rel="stylesheet" type="text/css" href="static/assets/css/ziy.css">
+
+
+<script type="text/javascript" src="static/assets/js/jquery-1.11.1.min.js"></script>
+ <script type="text/javascript" src="static/assets/js/select.js"></script>
+</head>
+<body>
+<!--头部--> 
+	<div id="header">
+		<div class="header-box">
+			<ul class="header-right">
+				<li class="denglu">
+					<a class="gouwuche">
+					<img src="static/assets/images/shopping-cart.png">
+					我的购物车
+					</a>
+				</li>
+				<li class="shu"></li>
+				<li id="loginInfo" class="denglu">Hi~<a id="loginName" class="red" href="doLoginUI.do">请登录!</a>
+					<a href="register.html">[免费注册]</a></li>
+				<li class="shu"></li>
+				</i>
+			</ul>
+		</div>
+	</div>
+<!---->
+	<div class="beij_center">
+		<div class="myGomeWeb">
+			
+			<!--修改内容-->
+			<div class="mod_main">
+			<div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name" id="username" value="">用户名:</label>
+              	</span>
+            </div>
+            
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">真实姓名：</label>
+              	</span>
+              	<input  id="name" value="" class="i-text" type="text">
+             
+            </div>
+
+            <div class="reg-items">
+              	<span>
+              		<input type="radio" name="sex" value="0" id="sex_nv">
+                	<label for="sex_nv">女</label>
+              	</span>
+              	<span style="margin-left:20px">
+              		<input type="radio" name="sex" value="1" id="sex_nv">
+                	<label for="sex_nv">男</label>
+              	</span>
+            </div>
+            
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">旧密码：</label>
+              	</span>
+              	<input id="oldPwd"  class="i-text" type="password">
+              	<!--备注————display使用 inline-block-->
+              	<div class="msg-box">
+                	<div class="msg-box" style="display: none;">
+	                  	<div class="msg-weak" style="display: inline-block;"> <i></i>
+	                    	<div class="msg-cont">键盘大写锁定已打开，请注意大小写!</div>
+	                  	</div>
+                	</div>
+                	<div class="msg-weak err-tips"  style="display:none;"><div>请输入密码</div></div>
+            	</div> 
+            </div>
+             <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">新密码：</label>
+              	</span>
+              	<input id="newPwd"  class="i-text" type="password" > </div>
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">确认密码：</label>
+              	</span>
+              	<input  id="conPwd" class="i-text" type="password" > 
+              	<!--备注————display使用 inline-block-->
+              	<div class="msg-box">
+                	<div class="msg-weak err-tips"  style="display: none;"><div>密码不一样</div></div>
+            	</div> 
+            </div>
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">手机号码：</label>
+              	</span>
+              	<input id="tel" class="i-text" value="" type="text">
+              	<!--备注————display使用 inline-block-->
+              	<div class="msg-box"> 
+                	<div class="msg-weak err-tips"  style="display:none;"><div>手机号不能为空</div></div>
+            	</div> 
+            </div> 
+            
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">邮箱账号：</label>
+              	</span>
+              	<input id="email" value="" class="i-text" type="text">
+            </div>
+            
+           	<!-- 删除了原有的手机号码获取验证码模块 -->
+           	
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name"> </label>
+              	</span>
+              	<input class="reg-btn" value="保存" type="button">
+            </div>
+		</div>
+        <div class="xiaogg">
+            <img src="">
+        </div>
+	</div>
+<!--底部-->
+<section id="footerContent"></section>
+<script type="text/javascript">
+$(function(){
+	//回显用户信息
+	$(".beij_center").load("doFindUser.do",function(result){
+		if(result.state==1){
+		$("#username").html(result.username),
+		$("#name").html(result.name),
+		$("#tel").html(result.telephone),
+		$("#email").html(result.email)
+		}else{
+			alert("出现了不可预知的错误");
+		}
+	});
+	$(".reg-btn").click(function(){
+		if()
+		var params={
+			username:${"#username"}.val(),
+		}
+	})
+})
+
+</script>
+</body>
+</html>
