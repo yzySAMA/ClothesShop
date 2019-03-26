@@ -110,9 +110,15 @@
 	// 创建td对象
 	function doCreateTds(row) {
 		console.log(row);
+		var sex;
+		if (row.sex == 0){
+			sex="女";
+		} else {
+			sex="男";
+		}
 		var tds = "<td>" + row.uid + "</td>" + "<td>" + row.username + "</td>"
 				+ "<td>" + row.name + "</td>" + "<td>" + row.email + "</td>"
-				+ "<td>" + row.telephone + "</td>" + "<td>" + row.sex + "</td>";
+				+ "<td>" + row.telephone + "</td>" + "<td>" + sex + "</td>";
 		return tds;
 	}
 </script>
