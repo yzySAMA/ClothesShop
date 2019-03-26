@@ -18,4 +18,5 @@ public interface ProductService {
 	Product doShowSingleProduct(String pid);
 	/**展示首页相应类别商品信息*/
 	List<Product> doShowCategoryProducts(String cid);
+	int deleteObjectById(String id);
 }

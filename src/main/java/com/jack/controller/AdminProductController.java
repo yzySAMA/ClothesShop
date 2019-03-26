@@ -21,6 +21,13 @@ public class AdminProductController {
 	@Autowired
 	private ProductService productService;
 
+	@RequestMapping("doDeleteObjectById")
+	@ResponseBody
+	public JsonResult doDeleteObjectById(String id) {
+		productService.deleteObjectById(id);
+		return new JsonResult("delete ok");
+	}
+	
 	// 分页查询,模糊查询
 	@RequestMapping("doFindObject")
 	@ResponseBody
@@ -34,6 +41,7 @@ public class AdminProductController {
 	@RequestMapping("doSaveObject")
 	@ResponseBody
 	public JsonResult doSaveObject(Product record) throws Throwable, IOException {
+		System.out.println(record);
 		productService.insertObject(record);
 		return new JsonResult("save oK");
 	}
@@ -49,8 +57,12 @@ public class AdminProductController {
 		String oriName = image.getOriginalFilename();
 		// 获取图片后缀
 		String extName = oriName.substring(oriName.lastIndexOf("."));
+		File dir = new File("D:/upload/static/assets/upload/");
+		if(!dir.isDirectory()) {
+			dir.mkdirs();
+		}
 		// 开始上传
-		image.transferTo(new File("D:\\projects\\ClothesShop\\src\\main\\webapp\\static\\assets\\upload\\" + picName + extName));
+		image.transferTo(new File("D:/upload/static/assets/upload/" + picName + extName));
 		String url = "static/assets/upload/"+picName + extName;
 		return new JsonResult(url);
 	}

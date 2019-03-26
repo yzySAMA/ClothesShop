@@ -3,12 +3,10 @@
 		<div class="box">
 			<div class="box-header">
 				<h3 class="box-title">商品管理</h3>
-
 				<div class="box-tools">
 					<div class="input-group input-group-sm" style="width: 350px;">
 						<input type="text" name="table_search" id="searchNameId"
 							class="form-control pull-right" placeholder="用户名">
-
 						<div class="input-group-btn">
 							<button type="button" class="btn btn-default btn-search">
                                 <i class="fa fa-search"></i>
@@ -51,16 +49,40 @@
 	   $(".input-group-btn")
 	   .on("click",".btn-search",doQueryObjects)
 	   .on("click",".btn-add,.btn-update",doLoadEditUI);
+	   $("#tbodyId").on("click", ".btn-delete", doDeleteById);
    });
+   
+ 	//删除订单信息
+	function doDeleteById() {
+ 		//debugger
+		//1.params
+		var id = $(this).parents("tr").data("pid");
+		//console.log("hehda"+id);
+		var params = {
+			"id" : id
+		};
+		//2.url
+		var url = "product/doDeleteObjectById.do";
+		//3.ajax request
+		$.post(url, params, function(result) {
+			if (result.state == 1) {
+				alert(result.message);
+				doGetObjects();
+			} else {
+				alert(result.message);
+			}
+		})
+
+	}
    
    function doLoadEditUI(){
 	   //1.判定点击的对象
 	   var title;
 	   if($(this).hasClass("btn-add")){
-		   title="添加用户";
+		   title="添加商品";
 		   doLoadPage(title);
 	   }else if($(this).hasClass("btn-update")){
-		   title="修改用户";
+		   title="修改商品";
 		   var pid=doGetCheckedId();
 		   console.log("pid="+pid);
 		   if(!pid){
@@ -115,16 +137,16 @@
    }
    //处理查询按钮事件
    function doQueryObjects(){
-	   $("#pageId").data("pageCurrent",1);
+	   $("#pageId").data("pageNum",1);
 	   doGetObjects();
    }
    //页面加载完成异步加载当前页数据
    function doGetObjects(){
-	   var url="product/doFindObject.do";
+	   var url="product/doFindObject";
 	   var pageNum=$("#pageId").data("pageNum");
 	   if(!pageNum)pageNum=1;
 	   var params={"pageNum":pageNum}
-	   params.username=$("#searchNameId").val().trim();
+	   params.pName=$("#searchNameId").val().trim();
 	   console.log(params);
 	   $.getJSON(url,params,function(result){
 		   console.log(result);
@@ -147,7 +169,7 @@
 	  //2.迭代data内容将数据追加到tbody中
 	  for(var i in data){
 		  var tr=$("<tr></tr>");
-		  tr.data("rowData",data[i]);
+		  tr.data("pid",data[i].pid);
 		  var tds=doCreateTds(data[i]);
 		  tr.append(tds);
 		  tBody.append(tr);
@@ -167,10 +189,11 @@
 	   var tds="<td><input type='radio' name='radioId' value='"+row.pid+"' ></td>"+
 		   "<td>"+row.pname+"</td>"+
 		   "<td>"+row.price+"</td>"+
-		   "<td>"+row.pimage+"</td>"+
+		   "<td>"+"<img src='"+("/pic/"+row.pimage)+"' width='100px' height='100px'/>"+"</td>"+
 		   "<td>"+row.pdesc+"</td>"+
 		   "<td>"+row.pnumber+"</td>"+
-		   "<td>"+row.cid+"</td>";
+		   "<td>"+row.cid+"</td>"+
+		   "<td><button type='button' class='btn btn-danger btn-delete' " + ">删除</button></td>";
        return tds;
    }
 </script>

@@ -145,6 +145,25 @@ public class ProductServiceImpl implements ProductService {
 		return rows;
 	}
 
-
+	/**
+	 * 	通过Id删除商品
+	 */
+	@Override
+	public int deleteObjectById(String id) {
+		//参数校验
+		if(StringUtils.isEmpty(id)) {
+			throw new ServiceException("删除的Id不能为空");
+		}
+		int rows = 0;
+		try {
+			rows = productMapper.deleteByPrimaryKey(id);
+		} catch (Exception e) {
+			throw new ServiceException("删除失败");
+		}
+		if(rows<1) {
+			throw new ServiceException(rows + "条记录被修改");
+		}
+		return rows;
+	}
 
 }

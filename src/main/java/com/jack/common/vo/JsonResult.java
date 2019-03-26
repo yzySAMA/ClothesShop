@@ -54,4 +54,10 @@ public class JsonResult {
 		this.data = data;
 	}
 
+	@Override
+	public String toString() {
+		return "JsonResult [state=" + state + ", message=" + message + ", data=" + data + "]";
+	}
+
+	
 }

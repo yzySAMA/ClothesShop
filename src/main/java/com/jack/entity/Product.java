@@ -87,4 +87,11 @@ public class Product {
     public void setCid(String cid) {
         this.cid = cid == null ? null : cid.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Product [pid=" + pid + ", pname=" + pname + ", price=" + price + ", pimage=" + pimage + ", pdesc="
+				+ pdesc + ", pnumber=" + pnumber + ", cid=" + cid + "]";
+	}
+    
 }
