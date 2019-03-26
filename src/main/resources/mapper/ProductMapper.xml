@@ -80,6 +80,13 @@
     from product limit 0,12
   </select>
   
+  <update id="updateProductCount">
+  	update product set pnumber = (pnumber-#{count}) where pid = #{pid}
+  </update>
+  
+  
+  
+  
   
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jack.entity.ProductExample" >
     select

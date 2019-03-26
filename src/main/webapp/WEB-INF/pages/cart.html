@@ -59,6 +59,10 @@ $(function() {
 })
 
 function doPayOrder() {
+	if ($("#zongjianshu").text() == 0) {
+		alert("请先选择商品");
+		return;
+	}
 	$("#MainContent").load("doPayOrderUI");
 }
 
@@ -77,7 +81,7 @@ function doShowCartList() {
 		//将信息呈现到页面
 		var tdiv = $(".container");
 		tdiv.empty();//先清空
-		$(".container").data("data",result);
+		$("body").data("data",result);
 		//迭代购物项
 		for (var i=0;i<result.data.length;i++){
 			var dataa = result.data[i];
@@ -124,7 +128,7 @@ function doAddUp() {
 			array.push($(this).val());
 		}
 	})
-	var da1 = $(".container").data("data");
+	var da1 = $("body").data("data");
 	var y = 0;
 	var z = 0;
 	for(var x in array){
@@ -133,13 +137,15 @@ function doAddUp() {
 	}
 	$("#zongjianshu").html(y);
 	$("#subtotal").html(z);
-	$(".container").data("array",array);
+	$("body").data("array",array);
+	$("body").data("zzz",z);
 }
 
 /* 购物项删除 */
 function doDeleteScitem() {
-	var da2 = $(".container").data("data");
-	var array = $(".container").data("array")
+	var da2 = $("body").data("data");
+	var array = $("body").data("array");	
+	
 	if(!array){
 		alert("请先选择");
 		return;

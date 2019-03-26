@@ -1,5 +1,19 @@
 <h2>确认支付</h2>
 
+<div class="table-responsive m-t">
+	<table class="table invoice-table">
+		<div class="well m-t">
+			<strong>填写收货信息：</strong>
+		</div>
+		<thead>
+			<tr>
+				<th>收货人：<input type="text" id="shouhuoren"/></th>
+				<th>收货地址：<input type="text" id="shouhuodizhi"/></th>
+				<th>电话号码：<input type="text" id="dianhua"/></th>
+			</tr>
+		</thead>
+	</table>
+</div>
 
 
 <div class="table-responsive m-t">
@@ -9,35 +23,11 @@
 				<th>清单</th>
 				<th>数量</th>
 				<th>单价</th>
-				<th>总价</th>
+				<th>小计</th>
 			</tr>
 		</thead>
-		<tbody>
-			<tr>
-				<td>
-					<strong>尚都比拉2013冬装新款女装 韩版修身呢子大衣 秋冬气质羊毛呢外套</strong>
-				</td>
-				<td>1</td>
-				<td>&yen;26.00</td>
-				<td>&yen;31,98</td>
-			</tr>
-			<tr>
-				<td>
-					<strong>11*11夏娜 新款斗篷毛呢外套 女秋冬呢子大衣 韩版大码宽松呢大衣</strong>
-				</td>
-				<td>2</td>
-				<td>&yen;80.00</td>
-				<td>&yen;196.80</td>
-			</tr>
-			<tr>
-				<td>
-					<strong>2013秋装 新款女装韩版学生秋冬加厚加绒保暖开衫卫衣 百搭女外套</strong>
-				</td>
-				<td>3</td>
-				<td>&yen;420.00</td>
-				<td>&yen;1033.20</td>
-			</tr>
-
+		<tbody id="wmtbody">
+			<!-- 订单动态加载地 -->
 		</tbody>
 	</table>
 </div>
@@ -47,19 +37,119 @@
 	<tbody>
 		<tr>
 			<td><strong>总价：</strong></td>
-			<td>&yen;1026.00</td>
+			<td id="fukuanzongjia">&yen;0.00</td>
 		</tr>
 	</tbody>
 </table>
 
 <div class="text-right">
-	<button class="btn btn-primary">
-		<i class="fa fa-dollar"></i> 去付款
+	<button class="btn" id="cancelpay">
+		<i class="fa fa-dollar">取消</i> 
+	</button>
+	<button class="btn btn-primary" id="paybutton">
+		<i class="fa fa-dollar">去付款</i> 
 	</button>
 </div>
 
 <div class="well m-t">
 	<strong>注意：</strong> 请在30日内完成付款，否则订单会自动取消。
 </div>
+
+
+
+<script type="text/javascript">
+/* 订单页面初始化 */
+$(function() {
+	var data1 = $("body").data("data")
+	var array1 = $("body").data("array")
+	var zz = $("body").data("zzz")
+	$("#fukuanzongjia").html("&yen;"+zz)
+	
+	for (var x in array1){
+		var wmtbody = $("#wmtbody");
+		var tr = $("<tr></tr>");
+		var tds = $("<td><strong>"+data1.data[array1[x]].pname+"</strong></td><td>"+data1.data[array1[x]].count+"</td><td>&yen;"+data1.data[array1[x]].price+"</td><td>&yen;"+data1.data[array1[x]].subtotal+"</td>")
+		tr.append(tds);
+		wmtbody.append(tr);
+		
+		var ppid = data1.data[array1[x]].pid;
+		var countt = data1.data[array1[x]].count;
+		doDecreaseStock(ppid,countt);
+	}	
+
+	/* 插入数据库 */
+	var url = "doPayment";
+	var ototal = array1.length;//订单项数目
+	var userString = sessionStorage.getItem("userJson");//获取键为allJson的字符串
+	var userJson = JSON.parse(userString);//将字符串抓换成对象
+	var uid = userJson.data.uid;
+	var params = {
+		"total": ototal,
+		"uid": uid
+	}
+	
+	$.post(url,params,function(result){
+		if (result.state == 1) {
+			$("body").data("hexid",result.data.toString(16));
+			//alert(result.message);
+		}else{
+			alert(result.message);
+		}
+	})
+	
+	
+	$(".text-right").on("click","#paybutton",doPayment)
+					.on("click","#cancelpay",doCancelPay)
+	
+})
+
+function doDecreaseStock(ppid,count) {
+	var url = "doDownProductCount";
+	var params = {
+		"pid": ppid,
+		"count": count
+	}
+	$.post(url,params,function(result){
+		if (result.state == 1) {
+			//alert(result.message);
+		}else{
+			alert(result.message);
+		}
+	})
+}
+
+
+
+function doPayment() {
+	var oid = $("body").data("hexid");
+	var address = $("#shouhuodizhi").val();
+	var name = $("#shouhuoren").val();
+	var telephone = $("#dianhua").val();
+	var params = {
+			"oid": oid,
+			"address": address,
+			"name": name,
+			"telephone": telephone
+	}
+	var url = "doChangeOrder";
+	$.post(url,params,function(result){
+		if (result.state == 1) {
+			alert(result.message);
+			location.href="homePage";
+		}else{
+			alert(result.message);
+		}
+	})
+	
+} 
+
+function doCancelPay() {
+	$("#MainContent").load("cartUI");
+}
+</script>
+
+
+
+
 
 

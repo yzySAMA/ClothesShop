@@ -1,6 +1,13 @@
 package com.jack.entity.vo;
 
 public class MyCartItemVo {
+	private String pid;
+	public String getPid() {
+		return pid;
+	}
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
 	private String pimage;
 	private String pname;
 	private Double price;
@@ -8,10 +15,11 @@ public class MyCartItemVo {
 	private String count;
 	private String subtotal;
 
+
 	@Override
 	public String toString() {
-		return "MyCartItemVo [pimage=" + pimage + ", pname=" + pname + ", price=" + price + ", scitemid=" + scitemid
-				+ ", count=" + count + ", subtotal=" + subtotal + "]";
+		return "MyCartItemVo [pid=" + pid + ", pimage=" + pimage + ", pname=" + pname + ", price=" + price
+				+ ", scitemid=" + scitemid + ", count=" + count + ", subtotal=" + subtotal + "]";
 	}
 	public String getPimage() {
 		return pimage;

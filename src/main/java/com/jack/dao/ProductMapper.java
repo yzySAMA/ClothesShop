@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 public interface ProductMapper {
 	/**首页热门商品获取 */
 	List<Product> doShowPopularProducts();
+	/**更新库存*/
+	int updateProductCount(@Param("pid")String pid,@Param("count")Integer count);
 	
     int countByExample(ProductExample example);
 
