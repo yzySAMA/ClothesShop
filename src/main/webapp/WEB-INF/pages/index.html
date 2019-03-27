@@ -56,11 +56,11 @@ function doShowPopularProducts() {
 	});
 }
 function doCreateLis(data) {
-	var lis="<span class='motaikuang' value='"+data.pid+"'><a href='#' class='meis_tup_kuang' data-toggle='modal' data-target='#quick-view-modal-container'><img src='"+data.pimage+"'></a></span>"+
+	var lis="<span class='motaikuang' value='"+data.pid+"'><a href='#' class='meis_tup_kuang' data-toggle='modal' data-target='#quick-view-modal-container'><img src='"+"/pic/"+data.pimage+"'></a></span>"+
 			"<div class='meis_neir'>"+
 			"<span class='motaikuang' value='"+data.pid+"'><a href='#' data-toggle='modal' data-target='#quick-view-modal-container'>"+data.pname+"</a></span>"+
 			"<p>库存："+data.pnumber+"</p>"+
-			"<h4><span>￥: "+data.price+"</span> <del>门面价: ￥"+((data.price)*1.2).toFixed(2)+"</del> </h4>"+
+			"<h4><span>￥: "+data.price+"</span> <del>门面价: ￥"+((data.price)*1.25).toFixed(2)+"</del> </h4>"+
 			"</div>";
 	return lis;
 }
@@ -73,9 +73,9 @@ function doShowSingleProduct() {
 	$.getJSON(url,params,function (result) {
 		console.log(result);
 		if (result.state == 1){
-			$(".img-fluid").attr("src",result.data.pimage);
+			$(".img-fluid").attr("src","/pic/"+result.data.pimage);
 			$(".discounted-price").html(result.data.price);
-			$(".discounted").html(result.data.price*1.2);
+			$(".discounted").html((result.data.price*1.25).toFixed(2));
 			$("#tccpid").val(result.data.pid);
 			$("#tccpname").html(result.data.pname);
 			$("#tccdesc").html(result.data.pdesc);

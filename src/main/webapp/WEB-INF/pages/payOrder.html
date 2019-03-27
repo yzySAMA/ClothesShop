@@ -65,19 +65,33 @@ $(function() {
 	var zz = $("body").data("zzz")
 	$("#fukuanzongjia").html("&yen;"+zz)
 	
+	var arr2 = [];//设置存放scitemid的数组，用于支付后删除购物车中的商品
+	var arrcount = [];
+	var arrtotal = [];
+	var arrpid = [];
 	for (var x in array1){
 		var wmtbody = $("#wmtbody");
 		var tr = $("<tr></tr>");
 		var tds = $("<td><strong>"+data1.data[array1[x]].pname+"</strong></td><td>"+data1.data[array1[x]].count+"</td><td>&yen;"+data1.data[array1[x]].price+"</td><td>&yen;"+data1.data[array1[x]].subtotal+"</td>")
 		tr.append(tds);
 		wmtbody.append(tr);
-		
+		//往数组中存值
+		arr2.push(data1.data[array1[x]].scitemid);
+		arrcount.push(data1.data[array1[x]].count);
+		arrtotal.push(data1.data[array1[x]].subtotal);
+		arrpid.push(data1.data[array1[x]].pid);
+		//减库存
 		var ppid = data1.data[array1[x]].pid;
 		var countt = data1.data[array1[x]].count;
 		doDecreaseStock(ppid,countt);
-	}	
+	}
 
-	/* 插入数据库 */
+	$("body").data("arr2",arr2);
+	$("body").data("arrcount",arrcount);
+	$("body").data("arrtotal",arrtotal);
+	$("body").data("arrpid",arrpid);
+	
+	/* 将订单信息先插入数据库 ，等支付完后再做部分插入与修改*/
 	var url = "doPayment";
 	var ototal = array1.length;//订单项数目
 	var userString = sessionStorage.getItem("userJson");//获取键为allJson的字符串
@@ -87,22 +101,23 @@ $(function() {
 		"total": ototal,
 		"uid": uid
 	}
-	
 	$.post(url,params,function(result){
 		if (result.state == 1) {
-			$("body").data("hexid",result.data.toString(16));
+			$("body").data("hexid",result.data.toString(16));//返回的oid
+			doInsertOrderItem();
 			//alert(result.message);
 		}else{
 			alert(result.message);
 		}
 	})
 	
-	
+	// 付款与取消 按钮事件
 	$(".text-right").on("click","#paybutton",doPayment)
 					.on("click","#cancelpay",doCancelPay)
 	
 })
 
+//在购物车中选择商品点击购买时 减少该商品的库存
 function doDecreaseStock(ppid,count) {
 	var url = "doDownProductCount";
 	var params = {
@@ -118,19 +133,44 @@ function doDecreaseStock(ppid,count) {
 	})
 }
 
+function doInsertOrderItem() {
+	var url = "doInsertOrderItem";
+	var arrcount = $("body").data("arrcount");
+	var arrtotal = $("body").data("arrtotal");
+	var arrpid = $("body").data("arrpid");
+	var oid = $("body").data("hexid");
+	var params = {
+		"arrcount": arrcount.toString(),
+		"arrtotal": arrtotal.toString(),
+		"arrpid": arrpid.toString(),
+		"oid": oid
+	}
+	$.post(url,params,function(result){
+		if (result.state == 1) {
+			//alert(result.message);
+		}else{
+			alert(result.message);
+		}
+	})
+}
 
 
+
+//点击付款后做的事
 function doPayment() {
 	var oid = $("body").data("hexid");
 	var address = $("#shouhuodizhi").val();
 	var name = $("#shouhuoren").val();
 	var telephone = $("#dianhua").val();
+	var arr2 = $("body").data("arr2");
 	var params = {
 			"oid": oid,
 			"address": address,
 			"name": name,
-			"telephone": telephone
+			"telephone": telephone,
+			"arr2": arr2.toString()
 	}
+	console.log(params)
 	var url = "doChangeOrder";
 	$.post(url,params,function(result){
 		if (result.state == 1) {

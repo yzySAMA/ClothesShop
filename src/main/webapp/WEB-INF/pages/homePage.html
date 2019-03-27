@@ -44,6 +44,12 @@
 					</a>
 				</li>
 				<li class="shu"></li>
+				
+				<li class="denglu">
+					<a class="aaaa" href="#">我的订单</a>
+				</li>
+				<li class="shu"></li>
+				
 				<li id="loginInfo" class="denglu">Hi~<a id="loginName" class="red" href="doLoginUI.do">请登录!</a>
 					<a href="register.html">[免费注册]</a></li>
 				<li class="shu"></li>
@@ -67,7 +73,7 @@
 	<div id="navv">
 		<div class="focus">
 			<div class="focus-a">
-				<div class="fouc-font aaaa">
+				<div class="fouc-font">
 					<a href="#" >商城首页</a>
 				</div>
 			</div>
@@ -179,8 +185,19 @@
 			$("#MainContent").load("cartUI");
 		})
 		
+		//点击购物车时前端验证是否登录
+		$(".aaaa").click(function() {
+			if(!sessionStorage.getItem("userJson")){
+				location.href="doLoginUI";
+			}
+			$(".meis_neir_lieb").empty();
+			$("#MainContent").load("myOrder");
+		})
+		
+		
 		//商品分类展示
 		$(".focus-b").on("click",".categroys",doShowCategoryProducts)
+		$(".header-box").on("click","#zhuxiaoa",doZhuxiao)
 		
 	});
 	
@@ -224,14 +241,19 @@
 		}
 		var username = userJson.data.username;
 		console.log(username);
-		$("#loginInfo").html(username);
+		$("#loginInfo").html("欢迎您： "+username+"<span id='zhuxiaoa'><a href='doLogout'>注销</a></span>");
 	}
 		
    	function doLoadUI(id,url){
    		$("."+id).click(function(){
-  		  $("#MainContent").load(url);
+   			$("#MainContent").empty();
+  		  $(".meis_neir_lieb").load(url);
   	  });
    	} 	
+   	
+   	function doZhuxiao() {
+   		sessionStorage.clear();
+	}
    	
 </script>
 
