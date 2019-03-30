@@ -47,5 +47,10 @@ public class PageController {
 		return "login";
 	}
 	
+	@RequestMapping("userEdit")
+	public String editUser(){
+		return "user_edit";
+	}
+	
 
 }

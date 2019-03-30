@@ -1,6 +1,61 @@
  
 
 /*商品列表1*/
+#sex_nv{
+	margin:10px 0 0 10px;
+}
+#sex_nv{
+	margin:10px 0 0 10px;
+}
+
+
+.personal-mybuluo-head {
+    height: 14px;
+    position: relative;
+    margin-bottom: 15px;
+}
+.personal-mybuluo-wording {
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    left: 30%;
+    background-color: #fff;
+    color: #777;
+    text-align: center;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+    padding: 0 10px;
+}
+.personal-border {
+    position: absolute;
+    top: -7px;
+    left: 0;
+    width: 60%;
+    height: 14px;
+    z-index: 1;
+}
+.jmu-border-1px {
+    position: relative;
+}
+.jmu-border-1px.border-bottom:after {
+    border-bottom: 1px solid #dedfe0;
+}
+
+.jmu-border-1px:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    -webkit-transform-origin: 0 0;
+    -webkit-transform: scale(1);
+    pointer-events: none;
+}
+
+
+
 
 .navv_ziy{ 
 	border-bottom: solid 2px #e10601; 
@@ -3365,7 +3420,7 @@ font:normal 14px/32px "Microsoft YaHei";
 }
 
 .myGomeWeb{
-	padding: 12px 0;
+	padding: 5% 0 0 30%;
 	display: block;
 	overflow: hidden;
 }

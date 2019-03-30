@@ -3,6 +3,7 @@ package com.jack.controller;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jack.common.vo.JsonResult;
+import com.jack.dao.UserMapper;
 import com.jack.entity.User;
 import com.jack.service.UserService;
 
@@ -18,6 +20,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private UserMapper userMapper;
+	
 	/**用户注册 */
 	@RequestMapping("doRegister.do")
 	@ResponseBody
@@ -46,16 +51,30 @@ public class UserController {
 	/**回显用户个人信息到信息修改页面*/
 	@RequestMapping("doFindUser.do")
 	@ResponseBody
-	public JsonResult doFindUser() {
-		User user=(User)SecurityUtils.getSubject().getPrincipal();
+	public JsonResult doFindUser(String uid) {
+		//User user=(User)SecurityUtils.getSubject().getPrincipal();
+		User user = userMapper.selectByPrimaryKey(uid);
 		return new JsonResult(user);
 	}
 	/**保存用户个人修改信息*/
 	@RequestMapping("doSaveUser.do")
 	@ResponseBody
 	public JsonResult doSaveUser(User user) {
+		
+		SimpleHash sh=new SimpleHash("MD5", user.getPassword());
+		user.setPassword(sh.toHex());
+		
 		userService.doUpdateUser(user);
 		return new JsonResult("保存成功");
+	}
+	
+	/**验证原密码的正确性*/
+	@RequestMapping("doPwdVerify")
+	@ResponseBody
+	public JsonResult doPwdVerify(String uid,String passw){
+		SimpleHash sh=new SimpleHash("MD5", passw);
+		Boolean equals = sh.toHex().equals(userMapper.selectByPrimaryKey(uid).getPassword());
+		return new JsonResult(equals);
 	}
 	
 	

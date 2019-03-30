@@ -52,7 +52,6 @@
 				
 				<li id="loginInfo" class="denglu">Hi~<a id="loginName" class="red" href="doLoginUI.do">请登录!</a>
 					<a href="register.html">[免费注册]</a></li>
-				<li class="shu"></li>
 				</i>
 			</ul>
 		</div>
@@ -65,7 +64,7 @@
 		</div>
 		<div class="search">
 			<input type="text" class="text" id="textt">
-			<button class="button">搜索</button>
+			<button class="button" id="searchButton">搜索</button>
 		</div>
 	</div>
 
@@ -74,7 +73,7 @@
 		<div class="focus">
 			<div class="focus-a">
 				<div class="fouc-font">
-					<a href="#" >商城首页</a>
+					<a href="" >商城首页</a>
 				</div>
 			</div>
 			<div class="focus-b">
@@ -197,9 +196,34 @@
 		//商品分类展示
 		$(".focus-b").on("click",".categroys",doShowCategoryProducts)
 		$(".header-box").on("click","#zhuxiaoa",doZhuxiao)
-		
+		$(".toub_beij").on("click","#searchButton",doSearch)
+
 	});
-	
+
+	function doSearch() {
+		var url = "doHomePageSearch";
+		var params = {
+			"keyWords" : $("#textt").val()
+		}
+		console.log(params)
+		$.getJSON(url,params,function (result) {
+			var tdiv = $(".meis_neir_lieb");
+			tdiv.empty();//先清空
+			$("#MainContent").empty();
+			var ul = $("<ul></ul>");
+			//迭代data
+			for (var i=0;i<result.data.length;i++){
+				var li = $("<li></li>");
+				var lis = doCreateLis(result.data[i]);
+				li.append(lis);
+				ul.append(li);
+			}
+			tdiv.append(ul);
+		})
+
+	}
+
+
 	function doShowCategoryProducts() {
 		var url = "doShowCategoryProducts";
 		var cid = $(this).val();
@@ -240,7 +264,7 @@
 		}
 		var username = userJson.data.username;
 		console.log(username);
-		$("#loginInfo").html("欢迎您： "+username+"<span id='zhuxiaoa'><a href='doLogout'>注销</a></span>");
+		$("#loginInfo").html("欢迎您：<a href='userEdit' style='color:red'> "+username+"</a>&nbsp;&nbsp;&nbsp;<span id='zhuxiaoa'><a href='doLogout'>注销</a></span>");
 	}
 		
    	function doLoadUI(id,url){

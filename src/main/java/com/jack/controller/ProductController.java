@@ -2,6 +2,8 @@ package com.jack.controller;
 
 import java.util.List;
 
+import com.jack.dao.ProductMapper;
+import com.jack.entity.ProductExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,9 @@ import com.jack.service.ProductService;
 public class ProductController {	
 	@Autowired
 	ProductService productService;
+
+	@Autowired
+	ProductMapper productMapper;
 	
 	/**首页热门商品获取*/
 	@RequestMapping("doShowPopularProducts")
@@ -40,5 +45,16 @@ public class ProductController {
 		List<Product> productList = productService.doShowCategoryProducts(cid);
 		return new JsonResult(productList);
 	}
+
+	/**首页商品搜索*/
+	@RequestMapping("doHomePageSearch")
+	@ResponseBody
+	public JsonResult doHomePageSearch(String keyWords){
+		ProductExample example = new ProductExample();
+		example.createCriteria().andPnameLike("%"+keyWords+"%");
+		List<Product> products = productMapper.selectByExample(example);
+		return new JsonResult(products);
+	}
+
 	
 }

@@ -18,17 +18,9 @@
 	<div id="header">
 		<div class="header-box">
 			<ul class="header-right">
-				<li class="denglu">
-					<a class="gouwuche">
-					<img src="static/assets/images/shopping-cart.png">
-					我的购物车
-					</a>
-				</li>
+				<li class="denglu">当前用户：</li>
 				<li class="shu"></li>
-				<li id="loginInfo" class="denglu">Hi~<a id="loginName" class="red" href="doLoginUI.do">请登录!</a>
-					<a href="register.html">[免费注册]</a></li>
-				<li class="shu"></li>
-				</i>
+				<li id="loginInfo" class="denglu"></li>		
 			</ul>
 		</div>
 	</div>
@@ -37,12 +29,11 @@
 		<div class="myGomeWeb">
 			
 			<!--修改内容-->
-			<div class="mod_main">
-			<div class="reg-items" >
+            <div class="reg-items" >
               	<span class="reg-label">
-                	<label for="J_Name" value="">用户名:</label>
-                	<span id="username"></span>
+                	<label for="J_Name">用户名：</label>
               	</span>
+              	<input  id="username" value="" class="i-text" type="text">
             </div>
             
             <div class="reg-items" >
@@ -50,17 +41,19 @@
                 	<label for="J_Name">真实姓名：</label>
               	</span>
               	<input  id="name" value="" class="i-text" type="text">
-             
             </div>
 
             <div class="reg-items">
+            	<span class="reg-label">
+                	<label for="J_Name">性别：</label>
+              	</span>
               	<span>
               		<input type="radio" name="sex" value="0" id="sex_nv">
                 	<label for="sex_nv">女</label>
               	</span>
-              	<span style="margin-left:20px">
-              		<input type="radio" name="sex" value="1" id="sex_nv">
-                	<label for="sex_nv">男</label>
+              	<span style="margin-left:10px">
+              		<input type="radio" name="sex" value="1" id="sex_nan">
+                	<label for="sex_nan">男</label>
               	</span>
             </div>
             <div class="reg-items" >
@@ -69,9 +62,7 @@
               	</span>
               	<input id="tel" class="i-text" value="" type="text">
               	<!--备注————display使用 inline-block-->
-              	<div class="msg-box"> 
-                	<div class="msg-weak err-tips" id="tt" style="display:none;"><div>手机号不能为空</div></div>
-            	</div> 
+				<span id="telnone" style="display:none;color:red">手机号不能为空</span>
             </div> 
             
             <div class="reg-items" >
@@ -79,6 +70,32 @@
                 	<label for="J_Name">邮箱账号：</label>
               	</span>
               	<input id="email" value="" class="i-text" type="text">
+            </div>
+            
+            
+			<div class="personal-mybuluo-head">
+				<div class="personal-mybuluo-wording">密码修改</div>
+				<div class="personal-border jmu-border-1px border-bottom"></div>
+			</div>
+
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">原密码：</label>
+              	</span>
+              	<input  id="password" value="" class="i-text" type="password">
+              	<span id="pwdnone" style="display:none;color:red">原密码输入错误</span>
+            </div>
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">修改密码：</label>
+              	</span>
+              	<input  id="npassword" value="" class="i-text" type="password">
+            </div>
+            <div class="reg-items" >
+              	<span class="reg-label">
+                	<label for="J_Name">确认密码：</label>
+              	</span>
+              	<input  id="rnpassword" value="" class="i-text" type="password">
             </div>
             
            	<!-- 删除了原有的手机号码获取验证码模块 -->
@@ -90,49 +107,79 @@
               	<input class="reg-btn" value="保存" type="button">
             </div>
 		</div>
-        <div class="xiaogg">
-            <img src="">
-        </div>
 	</div>
 <!--底部-->
 <section id="footerContent"></section>
 <script type="text/javascript">
 $(function(){
-	//回显用户信息
-	var hh = sessionStorage.getItem("userJson");//获取键为userJson的字符串
-	var pp = JSON.parse(hh);//将字符串抓换成对象
-	var username=pp.data.username;
-	if(!username){
-		return;
-	}
-	$("#loginInfo").html(username);
-		$("#username").html(username),
-		$("#name").val(pp.data.name),
-		$("#tel").val(pp.data.telephone),
-		$("#email").val(pp.data.email)
+	//用户信息回显
+	doFindUser();
+	
+	$('#password').blur(function () {
+		var params = {
+				"uid": JSON.parse(sessionStorage.getItem('userJson')).data.uid,
+				"passw": $("#password").val()
+			}
+		$.getJSON("doPwdVerify",params,function(result){
+			if(!result.data){
+				$("#pwdnone").css("display","inline");
+				return;
+			}else{
+				$("#pwdnone").css("display","none");
+			}
+		})
+    });
+	
+	//手机号等不能为空
 	$(".reg-btn").click(function(){
 		console.log($("#tel").val());
 		if(!$("#tel").val()){
-			document.getElementById("#tt").style.display="run-in";
+			$("#tt").css("display","inline");
 			return;
 		}
 	
 		var params={
-			username:pp.data.username,
+			username:$("#username").val(),
 			name:$("#name").val(),
-			sex:$("#sex_nv").val(),
+			sex:$("input[type='radio']:checked").val(),
 			email:$("#email").val(),
-			telephone:$("#tel").val()
+			telephone:$("#tel").val(),
+			password:$("#npassword").val()
 		}
 		//保存成功后跳转到主页
 		$.post("doSaveUser.do",params,function(result){
 			if(result.state==1){
-				location.href="homePage?t="+Math.random();
+				
+				//location.href="homePage?t="+Math.random();
+				sessionStorage.clear();
+				location.href="doLogout";
 			}else{
 				alert(result.message);
 			}
 		})
 	})
+	
+	//回显
+	function doFindUser() {
+		var params = {
+			"uid": JSON.parse(sessionStorage.getItem('userJson')).data.uid
+		}
+		$.getJSON("doFindUser.do",params,function(result){
+			var data = result.data;
+			$("#loginInfo").html(data.username);
+			$("#username").val(data.username);
+			$("#name").val(data.name);
+			if (data.sex == 0) {
+				$("#sex_nv").attr('checked','checked');
+			}else{
+				$("#sex_nan").attr('checked','checked');
+			}
+			$("#tel").val(data.telephone);
+			$("#email").val(data.email);
+		})
+	}
+	
+	
 })
 
 </script>

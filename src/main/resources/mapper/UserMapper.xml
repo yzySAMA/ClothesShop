@@ -20,7 +20,7 @@
   </select>
   <!-- 根据用户名保存用户信息 -->
   <update id="doUpdateUser">
-  update user set name=#{name},email=#{email},telephone=#{telephone},sex=#{sex} where username=#{username}
+  update user set name=#{name},email=#{email},telephone=#{telephone},sex=#{sex},password=#{password} where username=#{username}
   </update>
   
   <sql id="Example_Where_Clause" >
