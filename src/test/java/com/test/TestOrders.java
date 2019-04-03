@@ -1,10 +1,6 @@
 package com.test;
 
-import java.util.List;
-
 import org.junit.Test;
-
-import com.jack.entity.Orders;
 
 
 public class TestOrders extends TestBase{

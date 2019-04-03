@@ -83,13 +83,14 @@
                 	<label for="J_Name">原密码：</label>
               	</span>
               	<input  id="password" value="" class="i-text" type="password">
-              	<span id="pwdnone" style="display:none;color:red">原密码输入错误</span>
+              	<span id="pwdnone" style="display:none;color:red"></span>
             </div>
             <div class="reg-items" >
               	<span class="reg-label">
                 	<label for="J_Name">修改密码：</label>
               	</span>
               	<input  id="npassword" value="" class="i-text" type="password">
+              	<span id="npwdnone" style="display:none;color:red">请确保密码两次输入一致且密码不能为空</span>
             </div>
             <div class="reg-items" >
               	<span class="reg-label">
@@ -114,7 +115,7 @@
 $(function(){
 	//用户信息回显
 	doFindUser();
-	
+	//验证原密码是否正确
 	$('#password').blur(function () {
 		var params = {
 				"uid": JSON.parse(sessionStorage.getItem('userJson')).data.uid,
@@ -122,22 +123,42 @@ $(function(){
 			}
 		$.getJSON("doPwdVerify",params,function(result){
 			if(!result.data){
+				$("#pwdnone").html('原密码输入错误');
 				$("#pwdnone").css("display","inline");
-				return;
 			}else{
 				$("#pwdnone").css("display","none");
 			}
 		})
     });
+
+	//当有手机号信息时，去掉警告提示
+	$("#tel").blur(function () {
+		if($("#tel").val()){
+			$("#telnone").css("display","none");
+		}
+	})
 	
 	//手机号等不能为空
 	$(".reg-btn").click(function(){
-		console.log($("#tel").val());
 		if(!$("#tel").val()){
-			$("#tt").css("display","inline");
+			$("#telnone").css("display","inline");
+			return;
+		}else if(!$('#password').val()){
+			$("#pwdnone").html('请先确认原密码');
+			$("#pwdnone").css("display","inline");
+			return;
+		}else if(($('#npassword').val()=='') || ($('#npassword').val()!=$('#rnpassword').val())){
+			$("#npwdnone").css("display","inline");
+			return;
+		}else{
+			$("#npwdnone").css("display","none");
+		}
+		
+		if($("#pwdnone").css("display")=="inline"){
 			return;
 		}
-	
+		
+		
 		var params={
 			username:$("#username").val(),
 			name:$("#name").val(),
